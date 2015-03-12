@@ -6,6 +6,24 @@ import java.util.Scanner;
  */
 public class Searches {
     private Scanner scan = new Scanner(System.in);
+    
+    public ResultSet DriversBySimilarName(Client client, String name) {
+        ResultSet rv = null;
+
+        try {
+            rv = client.statement.executeQuery("SELECT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date" +
+                    "FROM people p, drive_licence l, restriction r, driving_condition c" +
+                    "WHERE p.sin = l.sin AND" +
+                    "r.licence_no = l.licence_no AND" +
+                    "r.r_id = c.c_id AND" +
+                    "LOWER(p.name) LIKE \"%\" || LOWER(\"" + name + "\") || \"%");
+        } catch(SQLException e) {
+            System.out.println("Search failed.");
+            System.out.println(e.getSQLState());
+        }
+
+        return rv;
+    }
 
     public ResultSet DriversByName(Client client, String name) {
         ResultSet rv = null;
@@ -25,7 +43,7 @@ public class Searches {
         return rv;
     }
 
-    public ResultSet DriversBySicenceNo(Client client, String licenceNo) {
+    public ResultSet DriversByLicenceNo(Client client, String licenceNo) {
         ResultSet rv = null;
 
         try {
