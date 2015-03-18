@@ -59,54 +59,54 @@ public class Client {
     }
 
     public void InitializeDatabase() {
-        String line = null;
-        Scanner fileReader;
+        String update = null;
+        SqlFileScanner sqlFile;
 
         try {
-            fileReader = new Scanner(new File("SQL/p1_setup.sql"));
+            sqlFile = new SqlFileScanner(new File("SQL/p1_setup.sql"));
         } catch(FileNotFoundException e) {
             System.out.println("Setup file not found. Check local directory for p1_setup.sql.");
             System.out.println(e.toString());
             return;
         }
         
-        StringBuffer sb = new StringBuffer();
         
-        while(fileReader.hasNextLine()) {
-            line = fileReader.nextLine();
-            sb.append(line + "\n");
+        while(sqlFile.hasNextUpdate()) {
+            update = sqlFile.nextUpdate();
+            try {
+    	        statement.execute(update);
+    	    } catch(SQLException e) {
+    	        System.out.println("Setup update did not execute:");
+    	        System.out.println(update);
+    	        System.out.println(e.getMessage());
+    	        System.out.println(e.getSQLState());
+    	    }
         }
-        try {
-	        statement.execute(sb.toString());
-	    } catch(SQLException e) {
-	        System.out.println("Setup did not execute.");
-	        System.out.println(e.getSQLState());
-	    }
     }
 
     public void PopulateDatabase() {
-        String line = null;
-        Scanner fileReader;
+        String update = null;
+        SqlFileScanner sqlFile;
 
         try {
-            fileReader = new Scanner(new File("SQL/data.sql"));
+            sqlFile = new SqlFileScanner(new File("SQL/data.sql"));
         } catch(FileNotFoundException e) {
             System.out.println("Data file not found. Check local directory for data.sql.");
             System.out.println(e.toString());
             return;
         }
-        StringBuffer sb = new StringBuffer();
         
-        while(fileReader.hasNextLine()) {
-            line = fileReader.nextLine();
-            sb.append(line + "\n");
+        while(sqlFile.hasNextUpdate()) {
+            update = sqlFile.nextUpdate();
+            try {
+    	        statement.execute(update);
+    	    } catch(SQLException e) {
+    	        System.out.println("Populate update did not execute.");
+    	        System.out.println(update);
+    	        System.out.println(e.getMessage());
+    	        System.out.println(e.getSQLState());
+    	    }
         }
-        try {
-	        statement.execute(sb.toString());
-	    } catch(SQLException e) {
-	        System.out.println("Populate did not execute.");
-	        System.out.println(e.getSQLState());
-	    }
     }
 
     public void Terminate() {
