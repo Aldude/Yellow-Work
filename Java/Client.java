@@ -11,15 +11,26 @@ import java.util.Scanner;
 public class Client {
     private Scanner scan = new Scanner(System.in);
 
-    private String dbURL = "jdbc:oracle:thin:@ui17.cs.ualberta.ca";
-    private String user = "sakaluk@ualberta.ca";
+    //private String exampleDbUrl = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
+    private String dbURL = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 
     private Connection dbConn;
     public Statement statement;
 
     public int ConnectToDatabase() {
-        System.out.println("Enter password for " + user);
+    	/*
+    	 * If we run this in the console, this should be modified to use Console.readLine() and Console.readPassword().
+    	 * However, these don't work while running in IDEs, since System.console() returns null.
+    	 */
+        System.out.println("Enter username:");
+    	String user = scan.nextLine();
+    	System.out.println("Enter password:");
         String pass = scan.nextLine();
+        
+        // Bunch of newlines to hide password after entering. Won't need if we use Console.readPassword().
+        for(int i = 0; i < 50; i++)
+        	System.out.println("");
+        
 
         try {
             dbConn = DriverManager.getConnection(dbURL, user, pass);
@@ -52,23 +63,25 @@ public class Client {
         Scanner fileReader;
 
         try {
-            fileReader = new Scanner(new File("./p1_setup.sql"));
+            fileReader = new Scanner(new File("SQL/p1_setup.sql"));
         } catch(FileNotFoundException e) {
             System.out.println("Setup file not found. Check local directory for p1_setup.sql.");
             System.out.println(e.toString());
             return;
         }
-
+        
+        StringBuffer sb = new StringBuffer();
+        
         while(fileReader.hasNextLine()) {
             line = fileReader.nextLine();
-
-            try {
-                statement.execute(line);
-            } catch(SQLException e) {
-                System.out.println("Command: " + line + " did not execute.");
-                System.out.println(e.getSQLState());
-            }
+            sb.append(line + "\n");
         }
+        try {
+	        statement.execute(sb.toString());
+	    } catch(SQLException e) {
+	        System.out.println("Setup did not execute.");
+	        System.out.println(e.getSQLState());
+	    }
     }
 
     public void PopulateDatabase() {
@@ -76,23 +89,24 @@ public class Client {
         Scanner fileReader;
 
         try {
-            fileReader = new Scanner(new File("./data.sql"));
+            fileReader = new Scanner(new File("SQL/data.sql"));
         } catch(FileNotFoundException e) {
             System.out.println("Data file not found. Check local directory for data.sql.");
             System.out.println(e.toString());
             return;
         }
-
+        StringBuffer sb = new StringBuffer();
+        
         while(fileReader.hasNextLine()) {
             line = fileReader.nextLine();
-
-            try {
-                statement.execute(line);
-            } catch(SQLException e) {
-                System.out.println("Command: " + line + " did not execute.");
-                System.out.println(e.getSQLState());
-            }
+            sb.append(line + "\n");
         }
+        try {
+	        statement.execute(sb.toString());
+	    } catch(SQLException e) {
+	        System.out.println("Populate did not execute.");
+	        System.out.println(e.getSQLState());
+	    }
     }
 
     public void Terminate() {
