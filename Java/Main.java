@@ -19,16 +19,94 @@ public class Main {
         Updates u = new Updates();
         
         ResultSet r = s.DriversBySimilarName(client, "ish");
+        
+        System.out.println("DriversBySimilarName:");
         try
 		{
 			while(r.next())
 			{
-			    System.out.println("Sin: " + r.getNString(2) + " Name: " + r.getNString(1));
+			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
 			}
 		} catch (SQLException e)
 		{
 			System.out.println("Exception:");
 			System.out.println(e.getMessage());
 		}
+        r = s.DriversByName(client, "Sandra Fisher");
+        
+        System.out.println("DriversByName:");
+        try
+		{
+			while(r.next())
+			{
+			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
+			}
+		} catch (SQLException e)
+		{
+			System.out.println("Exception:");
+			System.out.println(e.getMessage());
+		}
+        
+        r = s.DriversByLicenceNo(client, "97168-2113");
+        System.out.println("DriversByLicenseNo:");
+        try
+		{
+			while(r.next())
+			{
+			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
+			}
+		} catch (SQLException e)
+		{
+			System.out.println("Exception:");
+			System.out.println(e.getMessage());
+		}
+        
+        r = s.TicketsByLicenceNo(client, "97168-2113");
+        System.out.println("TicketsByLicenceNo:");
+
+        try
+		{
+			while(r.next())
+			{
+			    System.out.println("Ticket no: " + r.getNString(1));
+			}
+		} catch (SQLException e)
+		{
+			System.out.println("Exception:");
+			System.out.println(e.getMessage());
+		}
+		
+        r = s.TicketsBySIN(client, "555-666-005");
+        System.out.println("TicketsBySIN:");
+
+        try
+		{
+			while(r.next())
+			{
+			    System.out.println("Ticket no: " + r.getNString(1));
+			}
+		} catch (SQLException e)
+		{
+			System.out.println("Exception:");
+			System.out.println(e.getMessage());
+		}
+        
+        r = s.VehicleHistory(client, "0104-826-01665");
+        System.out.println("VehicleHistory:");
+        
+        try
+		{
+			while(r.next())
+			{
+			    System.out.println("Serial no: " + r.getNString(1) + "  Sales: " + r.getInt(2) +
+			    		"  Price: " + r.getDouble(3) + "  Violations: " + r.getInt(4));
+			}
+		} catch (SQLException e)
+		{
+			System.out.println("Exception:");
+			System.out.println(e.getMessage());
+		}
+        
+        client.Terminate();
     }
 }
