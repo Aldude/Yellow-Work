@@ -21,7 +21,7 @@ public class Updates {
 					"\", \"" + addr + "\", \"" + gender + "\", " + getSqlDateString(birthday) + ");" );
 		} catch(SQLException e) {
 			System.out.println("AddPerson :: INSERT into people failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 	}
@@ -41,7 +41,7 @@ public class Updates {
 					"VALUES( \"" + serialNo + "\", \"" + maker + "\", \"" + model + "\", " + year + ", \"" + color + "\", " + typeId + ");" );
 		} catch(SQLException e) {
 			System.out.println("RegisterVehicle :: INSERT into vehicle failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 		 
@@ -50,7 +50,7 @@ public class Updates {
 					"VALUES( \"" + primaryOwnerSin + "\", \"" + serialNo + "\", \"y\");" );
 		} catch(SQLException e) {
 			System.out.println("RegisterVehicle :: INSERT into owner (primary) failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 		 
@@ -61,7 +61,7 @@ public class Updates {
 						"VALUES( \"" + secondaryOwnerSin + "\", \"" + serialNo + "\", \"n\");" );
 			} catch(SQLException e) {
 				System.out.println("RegisterVehicle :: INSERT into owner (secondary) failed");
-				System.out.println(e.getSQLState());
+				System.out.println(e.getMessage());
 				return;
 			}
 		}
@@ -82,7 +82,7 @@ public class Updates {
 			 
 		} catch(SQLException e) {
 			System.out.println("DoTransaction :: DELETE from owner failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 		 
@@ -92,7 +92,7 @@ public class Updates {
 			 
 		} catch(SQLException e) {
 			System.out.println("DoTransaction :: INSERT into owner failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 		 
@@ -102,7 +102,7 @@ public class Updates {
 					"', " + getSqlDateString(saleDate) + ", " + price + ");" );
 		} catch(SQLException e) {
 			System.out.println("DoTransaction :: INSERT into auto_sale failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 		 
@@ -148,7 +148,7 @@ public class Updates {
 					"', '" + type + "', " + getSqlDateString(date) + ", '" + location + "', '" + description + "');" );
 		} catch(SQLException e) {
 			System.out.println("RegisterViolation :: INSERT into ticket failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
 			return;
 		}
 	}

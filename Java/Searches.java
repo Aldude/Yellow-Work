@@ -9,17 +9,19 @@ public class Searches {
     
     public ResultSet DriversBySimilarName(Client client, String name) {
         ResultSet rv = null;
+        String query = "SELECT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
+                "FROM people p, drive_licence l, restriction r, driving_condition c " +
+                "WHERE p.sin = l.sin AND " +
+                "r.licence_no = l.licence_no AND " +
+                "r.r_id = c.c_id AND " +
+                "LOWER(p.name) LIKE '%' || LOWER('" + name + "') || '%'";
 
         try {
-            rv = client.statement.executeQuery("SELECT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date" +
-                    "FROM people p, drive_licence l, restriction r, driving_condition c" +
-                    "WHERE p.sin = l.sin AND" +
-                    "r.licence_no = l.licence_no AND" +
-                    "r.r_id = c.c_id AND" +
-                    "LOWER(p.name) LIKE \"%\" || LOWER(\"" + name + "\") || \"%");
+            rv = client.statement.executeQuery(query);
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(e.getSQLState());
+            System.out.println(query);
+            System.out.println(e.getMessage());
         }
 
         return rv;
@@ -37,7 +39,7 @@ public class Searches {
                     "p.name = \"" + name + "\"");
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(e.getSQLState());
+            System.out.println(e.getMessage());
         }
 
         return rv;
@@ -55,7 +57,7 @@ public class Searches {
                     "l.licence_no = \"" + licenceNo + "\"");
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(e.getSQLState());
+            System.out.println(e.getMessage());
         }
 
         return rv;
@@ -70,7 +72,7 @@ public class Searches {
                     "WHERE violator_no = \"" + sin + "\"");
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(e.getSQLState());
+            System.out.println(e.getMessage());
         }
 
         return rv;
@@ -87,7 +89,7 @@ public class Searches {
                     "l.licence_no	= \"" + licenceNo + "\"");
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(e.getSQLState());
+            System.out.println(e.getMessage());
         }
 
         return rv;
@@ -105,7 +107,7 @@ public class Searches {
                     "GROUP BY v.serial_no");
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(e.getSQLState());
+            System.out.println(e.getMessage());
         }
 
         return rv;

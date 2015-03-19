@@ -76,7 +76,7 @@ public class Client {
             try {
     	        statement.execute(update);
     	    } catch(SQLException e) {
-    	        System.out.println("Setup update did not execute:");
+    	        System.out.println("InitializeDatabase :: The following update did not execute:");
     	        System.out.println(update);
     	        System.out.println(e.getMessage());
     	        System.out.println(e.getSQLState());
@@ -101,7 +101,7 @@ public class Client {
             try {
     	        statement.execute(update);
     	    } catch(SQLException e) {
-    	        System.out.println("Populate update did not execute.");
+    	        System.out.println("PopulateDatabase :: The following update did not execute:");
     	        System.out.println(update);
     	        System.out.println(e.getMessage());
     	        System.out.println(e.getSQLState());
