@@ -3,6 +3,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by Blake on 2015-03-09.
@@ -28,6 +29,29 @@ public class Main {
         cs.setChoice(3, s3);
         cs.setChoice(4, s4);
         cs.setChoice(5, s5);
+        
+        State autoRegistration = new State()
+        {
+			@Override
+			public void run()
+			{
+				Scanner in = new Scanner(System.in);
+				System.out.println("Please enter the vehicle's information:");
+				System.out.print("Maker: ");
+				String maker = in.next();
+				System.out.print("Model: ");
+				String model = in.next();
+				System.out.print("Year: ");
+				int year = in.nextInt();
+				System.out.print("Color: ");
+				String color = in.next();
+			}
+
+			@Override
+			public String getDescription() {return "New Vehicle Registration";}
+        	
+        };
+        cs.setChoice(6,autoRegistration);
         cs.run();
         
         Searches s = new Searches();
