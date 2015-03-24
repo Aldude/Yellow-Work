@@ -16,6 +16,7 @@ public class Client {
 
     private Connection dbConn;
     public Statement statement;
+    public PreparedStatement preparedStatement;
 
     public int ConnectToDatabase() {
     	/*
@@ -48,6 +49,7 @@ public class Client {
             return 2;
         }
 
+
         try {
             dbConn.setAutoCommit(true);
         } catch(SQLException e) {
@@ -56,6 +58,30 @@ public class Client {
         }
 
         return 0;
+    }
+    
+    public void PrepareStatement(String s) {
+    	try
+		{
+			preparedStatement = dbConn.prepareStatement(s);
+		} catch (SQLException e)
+		{
+			System.out.println("PrepareStatement :: Failed!");
+			System.out.println(e.getMessage());
+		}
+    }
+    
+    public Blob CreateBlob() {
+    	Blob b = null;
+    	try
+		{
+			b = dbConn.createBlob();
+		} catch (SQLException e)
+		{
+			System.out.println("CreateBlob :: Failed!");
+			System.out.println(e.getMessage());
+		}
+    	return b;
     }
 
     public void InitializeDatabase() {

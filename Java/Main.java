@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by Blake on 2015-03-09.
@@ -109,7 +110,7 @@ public class Main {
 		}
         
 
-    	u.AddPerson(client, "555-666-011", "Bob Bobson", 1.86, 89, "Blue", "Blonde", "123 Bob Road", 'm', new Date(1987, 1, 6));
+    	u.AddPerson(client, "555-666-011", "Bob Bobson", 1.86, 89, "Blue", "Blonde", "123 Bob Road", 'm', new Date(87, 1, 6));
     	r = s.DriversBySimilarName(client, "Bob");
         
         System.out.println("DriversBySimilarName (Bob Bobson):");
@@ -124,6 +125,11 @@ public class Main {
 			System.out.println("Exception:");
 			System.out.println(e.getMessage());
 		}
+        
+        u.RegisterVehicle(client,"1234-567-89098", "Honda", "Odyssey", 2005, "Grey", 6, "555-666-011", new ArrayList<String>());
+        u.RegisterVehicle(client,"0234-567-89098", "Honda", "Odyssey", 2005, "Grey", 6, "555-666-011", new ArrayList<String>());
+        u.DoTransaction(client,"555-666-011", "555-666-001", "1234-567-89098", new Date(115, 1, 1), 19000);
+        u.RegisterViolation(client, "555-666-011", "555-666-001", "1234-567-89098", "Parking", new Date(115,1,1), "123 road", "afsd");
         
         client.Terminate();
     }

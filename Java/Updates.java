@@ -1,8 +1,9 @@
 import java.sql.*;
+import java.util.List;
 
 public class Updates {
-	private int nextTransactionId = 1;
-	private int nextTicketNo = 1;
+	private int nextTransactionId = 22;
+	private int nextTicketNo = 10;
 	 
 	public void AddPerson(Client client,
 			String sin,
@@ -36,8 +37,8 @@ public class Updates {
 			int year,
 			String color,
 			int typeId,
-			int primaryOwnerSin,
-			int[] secondaryOwnerSins )
+			String primaryOwnerSin,
+			List<String> secondaryOwnerSins )
 	{
 		String update = "INSERT into vehicle " +
 				"VALUES( '" + serialNo + "', '" + maker + "', '" + model + "', " + year + ", '" + color + "', " + typeId + ")";
@@ -51,7 +52,7 @@ public class Updates {
 		}
 		
 		update = "INSERT into owner " +
-				"VALUES( '" + primaryOwnerSin + "', '" + serialNo + "', 'y');";
+				"VALUES( '" + primaryOwnerSin + "', '" + serialNo + "', 'y')";
 		try {
 			client.statement.executeUpdate(update);
 		} catch(SQLException e) {
@@ -61,7 +62,7 @@ public class Updates {
 			return;
 		}
 		 
-		for(int secondaryOwnerSin : secondaryOwnerSins)
+		for(String secondaryOwnerSin : secondaryOwnerSins)
 		{
 			update = "INSERT into owner " +
 					"VALUES( '" + secondaryOwnerSin + "', '" + serialNo + "', 'n')";
@@ -83,35 +84,38 @@ public class Updates {
 			Date saleDate,
 			int price)
 	{
+		String update = "DELETE " +
+				"FROM owner " +
+				"WHERE vehicle_id = '" + vehicleSerialNo + "'";
 		try {
-			client.statement.executeUpdate("DELETE " +
-					"FROM owner " +
-					"WHERE vehicle_id = '" + vehicleSerialNo + "'"
-					);
+			client.statement.executeUpdate(update);
 			 
 		} catch(SQLException e) {
 			System.out.println("DoTransaction :: DELETE from owner failed");
 			System.out.println(e.getMessage());
+			System.out.println(update);
 			return;
 		}
-		 
+		update = "INSERT into owner " +
+				"VALUES( '" + buyerSin + "', '" + vehicleSerialNo + "', 'y')";
 		try {
-			client.statement.executeUpdate("INSERT into owner" +
-					"VALUES( '" + buyerSin + "', '" + vehicleSerialNo + "', 'y')" );
+			client.statement.executeUpdate(update);
 			 
 		} catch(SQLException e) {
 			System.out.println("DoTransaction :: INSERT into owner failed");
 			System.out.println(e.getMessage());
+			System.out.println(update);
 			return;
 		}
-		 
+		update = "INSERT into auto_sale " +
+				"VALUES( " + nextTransactionId++ + ", '" + sellerSin + "', '" + buyerSin + "', '" + vehicleSerialNo +
+				"', " + getSqlDateString(saleDate) + ", " + price + ")";
 		try {
-			client.statement.executeUpdate("INSERT into auto_sale" +
-					"VALUES( " + nextTransactionId++ + ", '" + sellerSin + "', '" + buyerSin + "', '" + vehicleSerialNo +
-					"', " + getSqlDateString(saleDate) + ", " + price + ")" );
+			client.statement.executeUpdate(update);
 		} catch(SQLException e) {
 			System.out.println("DoTransaction :: INSERT into auto_sale failed");
 			System.out.println(e.getMessage());
+			System.out.println(update);
 			return;
 		}
 		 
@@ -125,21 +129,20 @@ public class Updates {
 			Date issuingDate,
 			Date expiringDate)
 	{
-		/*
-		 * TODO - get photo blob into INSERT statement. Might need PreparedStatement instead of Statement.
-		 * 
-		 * 
+		String update = "INSERT into drive_license " +
+				"VALUES( '" + licenseNo + "', '" + driverSin + "', '" + licenseClass + "', ?, " +
+				getSqlDateString(issuingDate) + ", " + getSqlDateString(expiringDate) + ")";
+		
 		try {
-			client.statement.set
-			
-			client.statement.executeUpdate("INSERT into drive_license" +
-					"VALUES( '" + licenseNo + "', '" + driverSin + "', '" + licenseClass + "', '");
-			 
+			client.PrepareStatement(update);
+			Blob blob = new javax.sql.rowset.serial.SerialBlob(photo);
+			client.preparedStatement.setBlob(1, blob);
 		} catch(SQLException e) {
 			System.out.println("RegisterLicense :: INSERT into drive_license failed");
-			System.out.println(e.getSQLState());
+			System.out.println(e.getMessage());
+			System.out.println(update);
 			return;
-		}*/
+		}
 	}
 	
 	public void RegisterViolation(Client client,
@@ -151,13 +154,15 @@ public class Updates {
 			String location,
 			String description)
 	{
+		String update = "INSERT into ticket " +
+				"VALUES( " + nextTicketNo++ + ", '" + violatorSin + "', '" + vehicleSerialNo + "', '" + officerSin +
+				"', '" + type + "', " + getSqlDateString(date) + ", '" + location + "', '" + description + "')";
 		try {
-			client.statement.executeUpdate("INSERT into ticket" +
-					"VALUES( " + nextTicketNo++ + ", '" + violatorSin + "', '" + vehicleSerialNo + "', '" + officerSin +
-					"', '" + type + "', " + getSqlDateString(date) + ", '" + location + "', '" + description + "')" );
+			client.statement.executeUpdate(update);
 		} catch(SQLException e) {
 			System.out.println("RegisterViolation :: INSERT into ticket failed");
 			System.out.println(e.getMessage());
+			System.out.println(update);
 			return;
 		}
 	}

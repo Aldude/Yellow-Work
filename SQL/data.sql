@@ -54,6 +54,7 @@ insert into vehicle_type values(2,	'Hatchback');
 insert into vehicle_type values(3,	'Pickup');
 insert into vehicle_type values(4,	'SUV');
 insert into vehicle_type values(5,	'Motorcycle');
+insert into vehicle_type values(6,	'Minivan');
 
 /* Vehicles */
 
