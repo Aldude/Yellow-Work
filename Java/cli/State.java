@@ -3,7 +3,7 @@ package cli;
 
 public abstract class State
 {	
-	private String description;
+	protected String description;
 	
 	public State(String d)
 	{

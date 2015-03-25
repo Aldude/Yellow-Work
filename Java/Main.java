@@ -20,12 +20,12 @@ public class Main {
     public static void main(String[] args) {
         Client client = new Client();
         
-        if(client.ConnectToDatabase() == 0) {
+        if(false && client.ConnectToDatabase() == 0) {
             client.InitializeDatabase();
             client.PopulateDatabase();
         }
         
-        ChoiceState cs = new ChoiceState("Main Menu!", true);
+        ChoiceState cs = new ChoiceState("Main Menu", true);
         State s1 = new DoNothingState("New Vehicle Registration");
         State s2 = new DoNothingState("Auto Transaction");
         State s3 = new DoNothingState("Driver License Registration");

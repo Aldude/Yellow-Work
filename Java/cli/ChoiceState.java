@@ -21,15 +21,17 @@ public class ChoiceState extends State
 	public void run()
 	{
 		int num;
+		Scanner in = new Scanner(System.in);
 		do
 		{
+			System.out.println("---------------------\n" + description);
 			System.out.println("Please make a selection (-1 to exit):");
+			System.out.println("---------------------");
 			for(Integer i : choices.keySet())
 			{
 				System.out.println(i + ") " + choices.get(i).getDescription());
 			}
 			do {
-				Scanner in = new Scanner(System.in);
 				num = in.nextInt();
 			}
 			while(!choices.containsKey(num) && num != -1);
@@ -38,6 +40,7 @@ public class ChoiceState extends State
 			
 			choices.get(num).run();
 		} while(loop);
+		in.close();
 		
 	}
 	
