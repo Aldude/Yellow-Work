@@ -2,8 +2,8 @@ package cli;
 
 public class ViolationRecordState extends State {
 
-	public ViolationRecordState(String d) {
-		super(d);
+	public ViolationRecordState() {
+		super("Violation Record");
 		// TODO Auto-generated constructor stub
 	}
 

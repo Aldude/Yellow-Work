@@ -2,8 +2,8 @@ package cli;
 
 public class NewVehicleState extends State {
 
-	public NewVehicleState(String d) {
-		super(d);
+	public NewVehicleState() {
+		super("New Vehicle Registration");
 		// TODO Auto-generated constructor stub
 	}
 

@@ -2,8 +2,8 @@ package cli;
 
 public class AutoTransactionState extends State {
 
-	public AutoTransactionState(String d) {
-		super(d);
+	public AutoTransactionState() {
+		super("Auto Transaction");
 		// TODO Auto-generated constructor stub
 	}
 

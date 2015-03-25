@@ -2,8 +2,8 @@ package cli;
 
 public class SearchState extends State {
 
-	public SearchState(String d) {
-		super(d);
+	public SearchState() {
+		super("Search");
 		// TODO Auto-generated constructor stub
 	}
 

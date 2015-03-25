@@ -8,9 +8,14 @@ import java.util.Scanner;
 import sql.Client;
 import sql.Searches;
 import sql.Updates;
+import cli.AutoTransactionState;
 import cli.ChoiceState;
 import cli.DoNothingState;
+import cli.LicenseRegistrationState;
+import cli.NewVehicleState;
+import cli.SearchState;
 import cli.State;
+import cli.ViolationRecordState;
 
 /**
  * Created by Blake on 2015-03-09.
@@ -26,11 +31,11 @@ public class Main {
         }
         
         ChoiceState cs = new ChoiceState("Main Menu", true);
-        State s1 = new DoNothingState("New Vehicle Registration");
-        State s2 = new DoNothingState("Auto Transaction");
-        State s3 = new DoNothingState("Driver License Registration");
-        State s4 = new DoNothingState("Violation Record");
-        State s5 = new DoNothingState("Search Engine");
+        State s1 = new NewVehicleState();
+        State s2 = new AutoTransactionState();
+        State s3 = new LicenseRegistrationState();
+        State s4 = new ViolationRecordState();
+        State s5 = new SearchState();
         cs.setChoice(1, s1);
         cs.setChoice(2, s2);
         cs.setChoice(3, s3);
