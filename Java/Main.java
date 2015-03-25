@@ -37,7 +37,7 @@ public class Main {
         cs.setChoice(4, s4);
         cs.setChoice(5, s5);
         
-        State autoRegistration = new State()
+        State autoRegistration = new State("New Vehicle Registration")
         {
 			@Override
 			public void run()
@@ -53,9 +53,6 @@ public class Main {
 				System.out.print("Color: ");
 				String color = in.next();
 			}
-
-			@Override
-			public String getDescription() {return "New Vehicle Registration";}
         	
         };
         cs.setChoice(6,autoRegistration);

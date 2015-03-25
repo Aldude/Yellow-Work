@@ -5,15 +5,14 @@ import java.util.Scanner;
 
 
 
-public class ChoiceState implements State
+public class ChoiceState extends State
 {
 	private Map<Integer, State> choices;
-	private String description;
 	private boolean loop;
 	
 	public ChoiceState(String d, boolean l)
 	{
-		description = d;
+		super(d);
 		loop = l;
 		choices = new HashMap<Integer, State>();
 	}
@@ -41,12 +40,6 @@ public class ChoiceState implements State
 		} while(loop);
 		
 	}
-
-		@Override
-		public String getDescription()
-		{
-			return description;
-		}
 	
 	public void setChoice(int n, State c)
 	{

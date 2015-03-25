@@ -1,19 +1,15 @@
 package cli;
 
 
-public class DoNothingState implements State
+public class DoNothingState extends State
 {
-	String description;
 	public DoNothingState(String d)
 	{
-		description = d;
+		super(d);
 	}
 
 	@Override
 	public void run()
 	{}
-
-	@Override
-	public String getDescription() { return description; }
 
 }

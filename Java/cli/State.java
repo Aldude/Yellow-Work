@@ -1,8 +1,15 @@
 package cli;
 
 
-public interface State
+public abstract class State
 {	
-	public void run();
-	public String getDescription();
+	private String description;
+	
+	public State(String d)
+	{
+		description = d;
+	}
+	
+	public abstract void run();
+	public String getDescription() {return description;}
 }
