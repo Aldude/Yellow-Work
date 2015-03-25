@@ -5,6 +5,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import sql.Client;
+import sql.Searches;
+import sql.Updates;
+import cli.ChoiceState;
+import cli.DoNothingState;
+import cli.State;
+
 /**
  * Created by Blake on 2015-03-09.
  */

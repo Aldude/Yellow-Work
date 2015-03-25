@@ -1,3 +1,4 @@
+package cli;
 
 
 public class DoNothingState implements State
