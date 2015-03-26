@@ -1,4 +1,6 @@
 package cli;
+import sql.Client;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -18,7 +20,7 @@ public class ChoiceState extends State
 	}
 
 	@Override
-	public void run()
+	public void run(Client client)
 	{
 		int num;
 		Scanner in = new Scanner(System.in);
@@ -32,13 +34,14 @@ public class ChoiceState extends State
 				System.out.println(i + ") " + choices.get(i).getDescription());
 			}
 			do {
+                /* TODO: This doesn't work when you input a non-numeric */
 				num = in.nextInt();
 			}
 			while(!choices.containsKey(num) && num != -1);
 			if(num == -1)
 				return;
 			
-			choices.get(num).run();
+			choices.get(num).run(client);
 		} while(loop);
 		in.close();
 		

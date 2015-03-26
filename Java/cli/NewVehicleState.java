@@ -1,5 +1,7 @@
 package cli;
 
+import sql.Client;
+
 public class NewVehicleState extends State {
 
 	public NewVehicleState() {
@@ -8,7 +10,7 @@ public class NewVehicleState extends State {
 	}
 
 	@Override
-	public void run() {
+	public void run(Client client) {
 		// TODO Auto-generated method stub
 
 	}

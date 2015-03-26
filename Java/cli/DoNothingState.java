@@ -1,6 +1,8 @@
 package cli;
 
 
+import sql.Client;
+
 public class DoNothingState extends State
 {
 	public DoNothingState(String d)
@@ -9,7 +11,7 @@ public class DoNothingState extends State
 	}
 
 	@Override
-	public void run()
+	public void run(Client client)
 	{}
 
 }

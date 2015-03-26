@@ -1,5 +1,7 @@
 package cli;
 
+import sql.Client;
+
 public class ViolationRecordState extends State {
 
 	public ViolationRecordState() {
@@ -8,7 +10,7 @@ public class ViolationRecordState extends State {
 	}
 
 	@Override
-	public void run() {
+	public void run(Client client) {
 		// TODO Auto-generated method stub
 
 	}

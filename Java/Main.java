@@ -1,8 +1,3 @@
-import java.io.FileNotFoundException;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import sql.Client;
@@ -10,7 +5,6 @@ import sql.Searches;
 import sql.Updates;
 import cli.AutoTransactionState;
 import cli.ChoiceState;
-import cli.DoNothingState;
 import cli.LicenseRegistrationState;
 import cli.NewVehicleState;
 import cli.SearchState;
@@ -45,7 +39,7 @@ public class Main {
         State autoRegistration = new State("New Vehicle Registration")
         {
 			@Override
-			public void run()
+			public void run(Client client)
 			{
 				Scanner in = new Scanner(System.in);
 				System.out.println("Please enter the vehicle's information:");
@@ -60,8 +54,9 @@ public class Main {
 			}
         	
         };
-        cs.setChoice(6,autoRegistration);
-        cs.run();
+
+        cs.setChoice(6, autoRegistration);
+        cs.run(client);
         
         Searches s = new Searches();
         Updates u = new Updates();

@@ -1,6 +1,8 @@
 package cli;
 
 
+import sql.Client;
+
 public abstract class State
 {	
 	protected String description;
@@ -10,6 +12,6 @@ public abstract class State
 		description = d;
 	}
 	
-	public abstract void run();
+	public abstract void run(Client client);
 	public String getDescription() {return description;}
 }
