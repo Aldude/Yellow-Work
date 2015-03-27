@@ -1,6 +1,7 @@
 package cli;
 
 import java.sql.ResultSet;
+import java.util.Scanner;
 
 import sql.Client;
 import sql.Searches;
@@ -8,7 +9,9 @@ import sql.Searches;
 /**
  * Created by Blake on 2015-03-26.
  */
-public class DriverNameSearchState extends SearchState {
+public class DriverNameSearchState extends State {
+
+    private Scanner scan = new Scanner(System.in);
 
     public DriverNameSearchState() {
         super("Driver Search by Name");
@@ -21,6 +24,6 @@ public class DriverNameSearchState extends SearchState {
         /* TODO: Do something useful with the result */
         ResultSet r = Searches.DriversWithLicenceByName(client, name);
         int[] columns = {1,2,3};
-        UserSelection.printResults(r,columns);
+        UserSelection.printResults(r, columns);
     }
 }
