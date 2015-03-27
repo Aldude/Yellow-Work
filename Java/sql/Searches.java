@@ -123,4 +123,17 @@ public class Searches {
 
         return rv;
     }
+    
+    public ResultSet VehicleTypes(Client client) {
+    	ResultSet rv = null;
+    	String query = "SELECT * from vehicle_type";
+    	try {
+    		rv = client.statement.executeQuery(query);
+    	} catch(SQLException e) {
+    		System.out.println("Search failed.");
+    		System.out.println(query);
+    		System.out.println(e.getMessage());
+    	}
+    	return rv;
+    }
 }

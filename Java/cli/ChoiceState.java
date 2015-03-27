@@ -43,7 +43,7 @@ public class ChoiceState extends State
 			
 			choices.get(num).run(client);
 		} while(loop);
-		in.close();
+		//in.close();
 		
 	}
 	

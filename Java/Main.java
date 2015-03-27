@@ -85,8 +85,7 @@ public class Main {
         r = s.DriversBySimilarName(client, "ish");
         
         int[] cols = {1,4};
-        UserSelection us = new UserSelection(r, "Select a driver", cols);
-        int selection = us.getChoice();
+        int selection = UserSelection.getChoice(r, "Select a driver", cols);
         
         try
 		{
