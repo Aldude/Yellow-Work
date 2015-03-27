@@ -10,11 +10,13 @@ import sql.Searches;
 
 public class GetDriverState extends ReturningState<String>
 {
+	private boolean addingAllowed;
 
-	public GetDriverState()
+	public GetDriverState(boolean a, String desc)
 	{
-		super("Get Driver SIN");
+		super(desc);
 		// TODO Auto-generated constructor stub
+		addingAllowed = a;
 	}
 
 	@Override
@@ -22,11 +24,18 @@ public class GetDriverState extends ReturningState<String>
 	{
 		Scanner in = new Scanner(System.in);
 		Searches s = new Searches();
+		int choice;
 		
-		GetChoiceState gcs = new GetChoiceState("Find a Driver");
-		gcs.addChoice(1, "Search for an existing driver");
-		gcs.addChoice(2, "Register a new driver");
-		switch(gcs.run(client)) {
+		if(addingAllowed) {
+			GetChoiceState gcs = new GetChoiceState("Find a Driver");
+			gcs.addChoice(1, "Search for an existing driver");
+			gcs.addChoice(2, "Register a new driver");
+			
+			choice = gcs.run(client);
+		} else {
+			choice = 1;
+		}
+		switch(choice) {
 			case -1:
 				return null;
 			case 1:

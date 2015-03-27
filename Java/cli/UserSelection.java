@@ -1,7 +1,6 @@
 package cli;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Scanner;
 
 
@@ -58,11 +57,11 @@ public class UserSelection
 	{
 		try {
 			result.first();
-			while(result.next()) {
+			do {
 				for(int col : columns)
 					System.out.print(result.getString(col) + " ");
 				System.out.println("");
-			}
+			} while(result.next());
 		} catch (SQLException e) {
 			System.out.println("printResults :: Failed");
 			System.out.println(e.getMessage());

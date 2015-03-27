@@ -1,9 +1,12 @@
 package sql;
+import java.io.ByteArrayInputStream;
 import java.sql.*;
 import java.util.List;
 import java.util.Date;
 
 public class Updates {
+    private static final boolean VERBOSE = true;
+    
 	private int nextTransactionId = 22;
 	private int nextTicketNo = 10;
 	
@@ -12,10 +15,13 @@ public class Updates {
 			client.statement.executeUpdate(update);
 		} catch(SQLException e) {
 			System.out.println("DoUpdate :: failed");
-			System.out.println(update);
+			if(!VERBOSE)
+				System.out.println(update);
 			System.out.println(e.getMessage());
 			return false;
 		}
+		if(VERBOSE)
+			System.out.println(update);
 		return true;
 	}
 	 
@@ -92,18 +98,30 @@ public class Updates {
 		 
 	 }
 	
-	public void RegisterLicense(Client client,
-			String licenseNo,
+	public void RegisterLicence(Client client,
+			String licenceNo,
 			String driverSin,
-			String licenseClass,
+			String licenceClass,
 			byte[] photo,
 			Date issuingDate,
 			Date expiringDate)
 	{
-		String update = "INSERT into drive_license " +
-				"VALUES( '" + licenseNo + "', '" + driverSin + "', '" + licenseClass + "', ?, " +
+		String update = "INSERT into drive_licence " +
+				"VALUES( '" + licenceNo + "', '" + driverSin + "', '" + licenceClass + "', ?, " +
 				getSqlDateString(issuingDate) + ", " + getSqlDateString(expiringDate) + ")";
-		doUpdate(client, update);
+		if(VERBOSE)
+			System.out.println(update);
+		
+		try {
+			client.PrepareStatement(update);
+			client.preparedStatement.setBinaryStream(1,new ByteArrayInputStream(photo),photo.length);
+		} catch(SQLException e) {
+			System.out.println("Registerlicence :: INSERT into drive_licence failed");
+			System.out.println(e.getMessage());
+			if(!VERBOSE)
+				System.out.println(update);
+			return;
+		}
 	}
 	
 	public void RegisterViolation(Client client,
@@ -118,7 +136,6 @@ public class Updates {
 		String update = "INSERT into ticket " +
 				"VALUES( " + nextTicketNo++ + ", '" + violatorSin + "', '" + vehicleSerialNo + "', '" + officerSin +
 				"', '" + type + "', " + getSqlDateString(date) + ", '" + location + "', '" + description + "')";
-
 		doUpdate(client, update);
 	}
 			

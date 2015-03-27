@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -9,7 +10,7 @@ import cli.AddDriverState;
 import cli.AutoTransactionState;
 import cli.ChoiceState;
 import cli.GetChoiceState;
-import cli.LicenseRegistrationState;
+import cli.LicenceRegistrationState;
 import cli.NewVehicleState;
 import cli.SearchState;
 import cli.State;
@@ -24,6 +25,15 @@ public class Main {
 											// so we don't try to connect when we can't
 
     public static void main(String[] args) {
+        LicenceRegistrationState lcs = new LicenceRegistrationState();
+        try
+		{
+			byte[] array = lcs.extractBytes("greensquare.jpg");
+		} catch (IOException e1)
+		{
+			e1.printStackTrace();
+		}
+        
         Client client = new Client();
         
         if(CONNECT && client.ConnectToDatabase() == 0) {
@@ -34,7 +44,7 @@ public class Main {
         ChoiceState cs = new ChoiceState("Main Menu", true);
         State s1 = new NewVehicleState();
         State s2 = new AutoTransactionState();
-        State s3 = new LicenseRegistrationState();
+        State s3 = new LicenceRegistrationState();
         State s4 = new ViolationRecordState();
         State s5 = new SearchState();
         cs.setChoice(1, s1);
@@ -68,7 +78,7 @@ public class Main {
         Searches s = new Searches();
         Updates u = new Updates();
         
-        ResultSet r = s.DriversWithLicenseBySimilarName(client, "ish");
+        ResultSet r = s.DriversWithLicenceBySimilarName(client, "ish");
         
         
         System.out.println("DriversBySimilarName:");
@@ -76,7 +86,7 @@ public class Main {
 		{
 			while(r.next())
 			{
-			    System.out.println("License no: " + r.getString(2) + " Name: " + r.getString(1) + " BDay: " + r.getString(4));
+			    System.out.println("Licence no: " + r.getString(2) + " Name: " + r.getString(1) + " BDay: " + r.getString(4));
 			}
 		} catch (SQLException e)
 		{
@@ -84,7 +94,7 @@ public class Main {
 			System.out.println(e.getMessage());
 		}
         
-        r = s.DriversWithLicenseBySimilarName(client, "ish");
+        r = s.DriversWithLicenceBySimilarName(client, "ish");
         
         int[] cols = {1,4};
         int selection = UserSelection.getChoice(r, "Select a driver", cols);
@@ -106,7 +116,7 @@ public class Main {
 		{
 			while(r.next())
 			{
-			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
+			    System.out.println("Licence no: " + r.getNString(2) + " Name: " + r.getNString(1));
 			}
 		} catch (SQLException e)
 		{
@@ -115,12 +125,12 @@ public class Main {
 		}
         
         r = s.DriversByLicenceNo(client, "97168-2113");
-        System.out.println("DriversByLicenseNo:");
+        System.out.println("DriversByLicenceNo:");
         try
 		{
 			while(r.next())
 			{
-			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
+			    System.out.println("Licence no: " + r.getNString(2) + " Name: " + r.getNString(1));
 			}
 		} catch (SQLException e)
 		{
@@ -183,7 +193,7 @@ public class Main {
 		{
 			while(r.next())
 			{
-			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
+			    System.out.println("Licence no: " + r.getNString(2) + " Name: " + r.getNString(1));
 			}
 		} catch (SQLException e)
 		{

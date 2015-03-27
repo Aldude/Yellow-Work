@@ -38,7 +38,7 @@ public class NewVehicleState extends State {
 		
 		/* Would be nice to make this use a ChoiceState or something similar */
 		out.println("Primary Driver: ");
-		GetDriverState g = new GetDriverState();
+		GetDriverState g = new GetDriverState(true, "Get Driver SIN");
 		String primarySin = g.run(client);
 		System.out.println(primarySin);
 		

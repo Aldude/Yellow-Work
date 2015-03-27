@@ -7,6 +7,7 @@ import java.util.Scanner;
  */
 public class Searches {
     private Scanner scan = new Scanner(System.in);
+    private static final boolean VERBOSE = true;
     
     public ResultSet doQuery(Client client, String query) {
     	ResultSet rv = null;
@@ -14,9 +15,12 @@ public class Searches {
             rv = client.statement.executeQuery(query);
         } catch(SQLException e) {
             System.out.println("Search failed.");
-            System.out.println(query);
+            if(!VERBOSE)	// so we don't print it twice
+            	System.out.println(query);
             System.out.println(e.getMessage());
         }
+    	if(VERBOSE)
+    		System.out.println(query);
 
         return rv;
     }
@@ -29,7 +33,7 @@ public class Searches {
         return doQuery(client, query);
     }
     
-    public ResultSet DriversWithLicenseBySimilarName(Client client, String name) {
+    public ResultSet DriversWithLicenceBySimilarName(Client client, String name) {
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
@@ -40,7 +44,7 @@ public class Searches {
         return doQuery(client, query);
     }
 
-    public ResultSet DriversWithLicenseByName(Client client, String name) {
+    public ResultSet DriversWithLicenceByName(Client client, String name) {
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
@@ -71,9 +75,10 @@ public class Searches {
     }
 
     public ResultSet TicketsByLicenceNo(Client client, String licenceNo) {
-        String query = "SELECT t.ticket_no " +
-                "FROM ticket t, people p, drive_licence l " +
+        String query = "SELECT t.ticket_no, t.vtype, p.name, p.sin, tt.fine " +
+                "FROM ticket t, people p, drive_licence l, ticket_type tt " +
                 "WHERE t.violator_no = p.sin AND " +
+                "t.vtype = tt.vtype AND " +
                 "p.sin = l.sin AND " +
                 "l.licence_no	= '" + licenceNo + "'";
 
@@ -92,8 +97,14 @@ public class Searches {
     }
     
     public ResultSet VehicleTypes(Client client) {
-    	String query = "SELECT * from vehicle_type";
+    	String query = "SELECT * FROM vehicle_type";
     	
         return doQuery(client, query);
+    }
+    
+    public ResultSet TicketTypes(Client client) {
+    	String query = "SELECT * FROM ticket_type";
+    	
+    	return doQuery(client, query);
     }
 }

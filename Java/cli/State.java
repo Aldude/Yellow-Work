@@ -14,4 +14,5 @@ public abstract class State
 	
 	public abstract void run(Client client);
 	public String getDescription() {return description;}
+	public void setDescription(String d) {description = d;}
 }

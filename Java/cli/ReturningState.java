@@ -14,4 +14,5 @@ public abstract class ReturningState<T>
 	
 	public abstract T run(Client client);
 	public String getDescription() {return description;}
+	public void setDescription(String d) {description = d;}
 }
