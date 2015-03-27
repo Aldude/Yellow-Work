@@ -12,6 +12,7 @@ import sql.Searches;
 public class DriverNameSearchState extends State {
 
     private Scanner scan = new Scanner(System.in);
+    String[] headers = {"Name", "SIN", "Licence No", "Address", "Birthday", "Licence Class", "Conditions", "Expires"};
 
     public DriverNameSearchState() {
         super("Driver Search by Name");
@@ -24,6 +25,6 @@ public class DriverNameSearchState extends State {
         /* TODO: Do something useful with the result */
         ResultSet r = Searches.DriversWithLicenceByName(client, name);
         int[] columns = {1,2,3};
-        UserSelection.printResults(r, columns);
+        UserSelection.printResults(r, columns, headers);
     }
 }

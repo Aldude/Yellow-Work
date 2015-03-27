@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class TicketLicenceNoSearchState extends State {
 
     private Scanner scan = new Scanner(System.in);
+    private String[] headers = {"Ticket", "Violation", "Name", "SIN", "Fine"};
 
     public TicketLicenceNoSearchState() { super("Ticket Search by Licence No"); }
 
@@ -22,6 +23,6 @@ public class TicketLicenceNoSearchState extends State {
         /* TODO: Do something useful with the result */
         ResultSet r = Searches.TicketsByLicenceNo(client, licence);
         int[] columns = {1,2,3,5};
-        UserSelection.printResults(r, columns);
+        UserSelection.printResults(r, columns, headers);
     }
 }

@@ -61,14 +61,18 @@ public final class UserSelection
 		return -2;
 	}
 	
-	public static void printResults(ResultSet result, int[] columns)
+	public static void printResults(ResultSet result, int[] columns, String[] headers)
 	{
+        for(int col : columns)
+            System.out.printf("%-9s ", headers[col]);
+        System.out.println();
+
 		try {
 			result.first();
 			do {
 				for(int col : columns)
-					System.out.print(result.getString(col) + " ");
-				System.out.println("");
+					System.out.printf("%-9s ", result.getString(col));
+				System.out.println();
 			} while(result.next());
 		} catch (SQLException e) {
 			System.out.println("printResults :: Failed");

@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class VehicleHistorySearchState extends State {
 
     private Scanner scan = new Scanner(System.in);
+    private String[] headers = {"Serial No", "Sales", "Price", "Violations"};
 
     public VehicleHistorySearchState() {
         super("Vehicle History Search by Serial No");
@@ -24,6 +25,6 @@ public class VehicleHistorySearchState extends State {
         /* TODO: Do something useful with the result */
         ResultSet r = Searches.VehicleHistory(client, serial);
         int[] columns = {1,2,3};
-        UserSelection.printResults(r,columns);
+        UserSelection.printResults(r,columns, headers);
     }
 }
