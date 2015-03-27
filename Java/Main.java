@@ -1,20 +1,10 @@
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
-
 import sql.Client;
-import sql.Searches;
-import sql.Updates;
-import cli.AddDriverState;
 import cli.AutoTransactionState;
 import cli.ChoiceState;
-import cli.GetChoiceState;
 import cli.LicenceRegistrationState;
 import cli.NewVehicleState;
 import cli.SearchState;
 import cli.State;
-import cli.UserSelection;
 import cli.ViolationRecordState;
 
 /**
@@ -43,6 +33,8 @@ public class Main {
         cs.setChoice(3, s3);
         cs.setChoice(4, s4);
         cs.setChoice(5, s5);
+        
+        cs.run(client);
         
         if(CONNECT)
         	client.Terminate();
