@@ -1,6 +1,7 @@
 package sql;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -24,6 +25,7 @@ public class Client {
     	 * If we run this in the console, this should be modified to use Console.readLine() and Console.readPassword().
     	 * However, these don't work while running in IDEs, since System.console() returns null.
     	 */
+    	
         System.out.println("Enter username:");
     	String user = scan.nextLine();
     	System.out.println("Enter password:");
@@ -43,7 +45,7 @@ public class Client {
         }
 
         try {
-            statement = dbConn.createStatement();
+            statement = dbConn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
             System.out.println("Statement creation failed.");
             System.out.println(e.getSQLState());
@@ -64,7 +66,7 @@ public class Client {
     public void PrepareStatement(String s) {
     	try
 		{
-			preparedStatement = dbConn.prepareStatement(s);
+			preparedStatement = dbConn.prepareStatement(s, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (SQLException e)
 		{
 			System.out.println("PrepareStatement :: Failed!");

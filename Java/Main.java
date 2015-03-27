@@ -1,3 +1,5 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import sql.Client;
@@ -9,17 +11,20 @@ import cli.LicenseRegistrationState;
 import cli.NewVehicleState;
 import cli.SearchState;
 import cli.State;
+import cli.UserSelection;
 import cli.ViolationRecordState;
 
 /**
  * Created by Blake on 2015-03-09.
  */
 public class Main {
+	public static final boolean CONNECT = true;	// make this false when testing at home
+											// so we don't try to connect when we can't
 
     public static void main(String[] args) {
         Client client = new Client();
         
-        if(false && client.ConnectToDatabase() == 0) {
+        if(CONNECT && client.ConnectToDatabase() == 0) {
             client.InitializeDatabase();
             client.PopulateDatabase();
         }
@@ -60,21 +65,39 @@ public class Main {
         
         Searches s = new Searches();
         Updates u = new Updates();
-        /*
+        
         ResultSet r = s.DriversBySimilarName(client, "ish");
+        
         
         System.out.println("DriversBySimilarName:");
         try
 		{
 			while(r.next())
 			{
-			    System.out.println("License no: " + r.getNString(2) + " Name: " + r.getNString(1));
+			    System.out.println("License no: " + r.getString(2) + " Name: " + r.getString(1) + " BDay: " + r.getString(4));
 			}
 		} catch (SQLException e)
 		{
 			System.out.println("Exception:");
 			System.out.println(e.getMessage());
 		}
+        
+        r = s.DriversBySimilarName(client, "ish");
+        
+        int[] cols = {1,4};
+        UserSelection us = new UserSelection(r, "Select a driver", cols);
+        int selection = us.getChoice();
+        
+        try
+		{
+            r.absolute(selection);
+			System.out.println("Selection: " + selection + " - " + r.getString(1));
+		} catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        /*
         r = s.DriversByName(client, "Sandra Fisher");
         
         System.out.println("DriversByName:");
@@ -172,6 +195,7 @@ public class Main {
         u.DoTransaction(client,"555-666-011", "555-666-001", "1234-567-89098", new Date(115, 1, 1), 19000);
         u.RegisterViolation(client, "555-666-011", "555-666-001", "1234-567-89098", "Parking", new Date(115,1,1), "123 road", "afsd");
         */
-        client.Terminate();
+        if(CONNECT)
+        	client.Terminate();
     }
 }

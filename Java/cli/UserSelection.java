@@ -22,46 +22,44 @@ public class UserSelection
 {
 	private ResultSet result;
 	private String prompt;
-	private int cColumn;
-	private int dColumn;
+	private int[] columns;
 	
-	public UserSelection(ResultSet r, String p, int cCol, int dCol)
+	public UserSelection(ResultSet r, String p, int[] c)
 	{
 		result = r;
 		prompt = p;
-		cColumn = cCol;
-		dColumn = dCol;
+		columns = c;
 	}
 	
 	public int getChoice()
 	{
-		HashMap<Integer, String> options = new HashMap<Integer, String>();
-		int num;
+		int row, choice;
 		Scanner in = new Scanner(System.in);
+		
 		try {
 			result.first();
 			
+			row = 0;
+
+			System.out.println(prompt + " (-1 to exit)");
 			do {
-				Integer code = result.getInt(cColumn);
-				String desc = result.getString(dColumn);
-				options.put(code, desc);
+				row++;
+				System.out.print(row + " ) ");
+				for(int col : columns)
+					System.out.print(result.getString(col) + " ");
+				System.out.println("");
 			} while(result.next());
 			
-			System.out.println(prompt + " (-1 to exit)");
-			for(Integer code : options.keySet())
-			{
-				System.out.println(code + " ) " + options.get(code));
-			}
-			
 			do {
-				num = in.nextInt();
+				choice = in.nextInt();
 			}
-			while(!options.containsKey(num) && num != -1);
+			while(choice > row || choice == 0 || choice < -1);
 			in.close();
-			return num;
+			result.first();
+			return choice;
 			
 		} catch (SQLException e) {
-			System.out.println("getChoice :: Failes");
+			System.out.println("getChoice :: Failed");
 			System.out.println(e.getMessage());
 		}
 		
