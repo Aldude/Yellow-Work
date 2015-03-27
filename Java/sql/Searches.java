@@ -3,16 +3,19 @@ import java.sql.*;
 import java.util.Scanner;
 
 /**
- * Created by Blake on 2015-03-09.
+ * Container class that executes the searches.
  */
 public final class Searches {
     private static Scanner scan = new Scanner(System.in);
+    /* Varable for testing/debugging */
     private static final boolean VERBOSE = false;
     
     private Searches() {}
-    
+
+    /* takes in the SqL query string and executes it */
     public static ResultSet doQuery(Client client, String query) {
     	ResultSet rv = null;
+
     	try {
             rv = client.statement.executeQuery(query);
         } catch(SQLException e) {
@@ -21,6 +24,7 @@ public final class Searches {
             	System.out.println(query);
             System.out.println(e.getMessage());
         }
+
     	if(VERBOSE)
     		System.out.println(query);
 

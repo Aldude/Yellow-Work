@@ -7,16 +7,19 @@ import java.sql.ResultSet;
 import java.util.Scanner;
 
 /**
- * Created by Blake on 2015-03-26.
+ * Serves as an option in the search menu to allow the user to find the tickets associated with a licence no.
  */
 public class TicketLicenceNoSearchState extends State {
 
     private Scanner scan = new Scanner(System.in);
+    /* The SQL headers to display with the results */
     private String[] headers = {"Ticket", "Violation", "Name", "SIN", "Fine"};
 
+    /* Default constructor */
     public TicketLicenceNoSearchState() { super("Ticket Search by Licence No"); }
 
     @Override
+    /* Executes the search and prints the results to the console */
     public void run(Client client) {
         System.out.println("Licence number to search for:");
         String licence = scan.nextLine();

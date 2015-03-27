@@ -4,19 +4,22 @@ import sql.Client;
 
 import java.util.Scanner;
 
+/**
+ * Serves as an option in the main menu to allow the user to search the database.
+ */
 public class SearchState extends State {
-    protected Scanner scan = new Scanner(System.in);
 
+    /* Default constructor */
 	public SearchState() {
 		super("Search");
-		// TODO Auto-generated constructor stub
 	}
 
+    /* Default constructor */
     public SearchState(String d) { super(d); }
 
 	@Override
+    /* Displays a menu on the console for the user to select search method */
 	public void run(Client client) {
-		// TODO Auto-generated method stub
         ChoiceState cs = new ChoiceState("Main Menu", true);
         State s1 = new DriverNameSearchState();
         State s2 = new DriverLicenceNoSearchState();
