@@ -20,7 +20,7 @@ public class SearchState extends State {
 	@Override
     /* Displays a menu on the console for the user to select search method */
 	public void run(Client client) {
-        ChoiceState cs = new ChoiceState("Main Menu", true);
+        ChoiceState cs = new ChoiceState("Search Engine", true);
         State s1 = new DriverNameSearchState();
         State s2 = new DriverLicenceNoSearchState();
         State s3 = new TicketLicenceNoSearchState();

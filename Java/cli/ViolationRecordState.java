@@ -1,11 +1,7 @@
 package cli;
 
 import java.io.PrintStream;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Scanner;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,13 +22,13 @@ public class ViolationRecordState extends State {
 		Scanner in = new Scanner(System.in);
 		PrintStream out = System.out;
 		
-		out.println("Enter Violation Information:");
+		DataCollector dc = new DataCollector("Enter Violation Information");
+		
 		GetDriverState gds = new GetDriverState(false, "Violator SIN");
 		String violatorSin = gds.run(client);
 		gds.setDescription("Officer SIN");
 		String officerSin = gds.run(client);
-		out.print("Vehicle SIN: ");
-		String vehicleId = in.nextLine();
+		String vehicleId = dc.getString("Vehicle Serial No");
 		
 		ResultSet r = Searches.TicketTypes(client);
 		int[] cols = {1,2};
@@ -47,25 +43,13 @@ public class ViolationRecordState extends State {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		out.print("Date (format yyyy-mm-dd):");
-		String bdayString = in.nextLine();
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		Date date = new Date();
-		try
-		{
-			date = format.parse(bdayString);
-		} catch (ParseException e)
-		{
-			System.out.println("Error parsing date");
-			System.out.println(e.getMessage());
-		}
 		
-		out.print("Location: ");
-		String location = in.nextLine();
-		out.print("Description: ");
-		String description = in.nextLine();
+		Date date = dc.getDate("Date");
+		String location = dc.getString("Location");
+		String description = dc.getString("Description");
 		
-		Updates.RegisterViolation(client, violatorSin, officerSin, vehicleId, ticketType, date, location, description);
+		if(Updates.RegisterViolation(client, violatorSin, officerSin, vehicleId, ticketType, date, location, description))
+			out.println("Violation registered successfully!");
 	}
 
 }

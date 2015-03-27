@@ -28,7 +28,8 @@ public class AutoTransactionState extends State {
 		gds.setDescription("Seller SIN");
 		String sellerSin = gds.run(client);
 		
-		Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price);
+		if(Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price))
+			System.out.println("Transaction successful!");
 	}
 
 }

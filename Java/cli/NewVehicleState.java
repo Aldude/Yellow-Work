@@ -44,8 +44,8 @@ public class NewVehicleState extends State {
 			tempSecondarySin = g.run(client);
 		}
 		
-		Updates.RegisterVehicle(client, serialNo, maker, model, year, color, type, primarySin, secondarySins);
-		
+		if(Updates.RegisterVehicle(client, serialNo, maker, model, year, color, type, primarySin, secondarySins));
+			out.println("New vehicle registation successful!");
 	}
 
 }

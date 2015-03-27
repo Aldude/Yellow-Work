@@ -48,7 +48,8 @@ public class LicenceRegistrationState extends State {
 		java.util.Date expDate = (Date) today.clone();
 		expDate.setYear(today.getYear() + 4);
 		
-		Updates.RegisterLicence(client, licenceNo, driverSin, licenceClass, image, today, expDate);
+		if(Updates.RegisterLicence(client, licenceNo, driverSin, licenceClass, image, today, expDate))
+			out.println("Registration Successful!");
 	}
 
 	

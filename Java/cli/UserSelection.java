@@ -20,6 +20,7 @@ import java.util.Scanner;
  */
 public final class UserSelection
 {
+	private static final int EXHAUSTED_RESULTSET = 17011;
 	
 	private UserSelection() {}
 	
@@ -64,7 +65,7 @@ public final class UserSelection
 	public static void printResults(ResultSet result, int[] columns, String[] headers)
 	{
         for(int col : columns)
-            System.out.printf("%-9s ", headers[col]);
+            System.out.printf("%-9s ", headers[col-1]);
         System.out.println();
 
 		try {
@@ -75,8 +76,12 @@ public final class UserSelection
 				System.out.println();
 			} while(result.next());
 		} catch (SQLException e) {
-			System.out.println("printResults :: Failed");
-			System.out.println(e.getMessage());
+			if(e.getErrorCode() == EXHAUSTED_RESULTSET)
+				System.out.println("No Results Found!");
+			else {
+				System.out.println("printResults :: Failed");
+				System.out.println(e.getMessage());
+			}
 		}
 	}
 	
