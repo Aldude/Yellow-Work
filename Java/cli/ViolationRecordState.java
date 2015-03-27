@@ -25,12 +25,31 @@ public class ViolationRecordState extends State {
 		DataCollector dc = new DataCollector("Enter Violation Information");
 		
 		GetDriverState gds = new GetDriverState(false, "Violator SIN");
-		String violatorSin = gds.run(client);
+		boolean ignoreViolatorSin = !dc.getBool("Enter a violator sin?");
+		String violatorSin;
+		if(ignoreViolatorSin) 
+			violatorSin = "NULL";
+		else
+			violatorSin = gds.run(client);
 		gds.setDescription("Officer SIN");
 		String officerSin = gds.run(client);
-		String vehicleId = dc.getString("Vehicle Serial No");
+
+		String vehicleSerialNo = dc.getString("Vehicle Serial No");
+		ResultSet r = Searches.VehicleBySerialNo(client, vehicleSerialNo);
+		try
+		{
+			while(!r.isBeforeFirst()) {
+				out.println("Vehicle not found!");
+				vehicleSerialNo = dc.getString("Vehicle Serial No");
+				r = Searches.VehicleBySerialNo(client, vehicleSerialNo);
+			}
+		} catch (SQLException e1)
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
-		ResultSet r = Searches.TicketTypes(client);
+		r = Searches.TicketTypes(client);
 		int[] cols = {1,2};
 		int choice = UserSelection.getChoice(r, "Ticket Type", cols);
 		String ticketType = null;
@@ -48,8 +67,8 @@ public class ViolationRecordState extends State {
 		String location = dc.getString("Location");
 		String description = dc.getString("Description");
 		
-		if(Updates.RegisterViolation(client, violatorSin, officerSin, vehicleId, ticketType, date, location, description))
-			out.println("Violation registered successfully!");
+		if(Updates.RegisterViolation(client, violatorSin, officerSin, vehicleSerialNo, ticketType, date, location, description))
+			out.println("\n\nViolation registered successfully!\n");
 	}
 
 }

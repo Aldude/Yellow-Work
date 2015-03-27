@@ -14,7 +14,7 @@ public class Main {
 	public static final boolean CONNECT = true;	// make this false when testing at home
 													// so we don't try to connect when we can't
 
-    public static void main(String[] args) {        
+    public static void main(String[] args) {    	
         Client client = new Client();
         
         if(CONNECT && client.ConnectToDatabase() == 0) {

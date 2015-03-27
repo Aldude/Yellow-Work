@@ -28,28 +28,25 @@ public class LicenceRegistrationState extends State {
 		Scanner in = new Scanner(System.in);
 		PrintStream out = System.out;
 		
-		out.println("Enter licence information:");
-		out.print("licence number: ");
-		String licenceNo = in.nextLine();
+		DataCollector dc = new DataCollector("Enter licence information");
+		String licenceNo = dc.getString("Licence Number");
+		
 		GetDriverState gds = new GetDriverState(true, "Driver SIN");
 		String driverSin = gds.run(client);
-		out.print("Class: ");
-		String licenceClass = in.nextLine();
-		out.print("Image path: ");
+		String licenceClass = dc.getString("Class");
 		byte[] image = {};
 		try
 		{
-			image = extractBytes(in.nextLine());
+			image = extractBytes(dc.getString("Image Path"));
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
-		java.util.Date today = Calendar.getInstance().getTime();
-		java.util.Date expDate = (Date) today.clone();
-		expDate.setYear(today.getYear() + 4);
+		Date issueDate = dc.getDate("Issuing Date");
+		Date expDate = dc.getDate("Expiry Date");
 		
-		if(Updates.RegisterLicence(client, licenceNo, driverSin, licenceClass, image, today, expDate))
-			out.println("Registration Successful!");
+		if(Updates.RegisterLicence(client, licenceNo, driverSin, licenceClass, image, issueDate, expDate))
+			out.println("\n\nRegistration Successful!\n");
 	}
 
 	

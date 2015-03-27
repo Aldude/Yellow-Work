@@ -45,7 +45,7 @@ public class NewVehicleState extends State {
 		}
 		
 		if(Updates.RegisterVehicle(client, serialNo, maker, model, year, color, type, primarySin, secondarySins));
-			out.println("New vehicle registation successful!");
+			out.println("\n\nNew vehicle registation successful!\n");
 	}
 
 }

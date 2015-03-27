@@ -22,11 +22,14 @@ public class Client {
     public PreparedStatement preparedStatement;
 
     public int ConnectToDatabase() {
+    	String user;
+    	String pass;
+    	
     	if(console == null) {
             System.out.println("Enter username:");
-            String user = scan.nextLine();
+            user = scan.nextLine();
             System.out.println("Enter password:");
-            String pass = scan.nextLine();
+            pass = scan.nextLine();
 
             // Bunch of newlines to hide password after entering. Won't need if we use Console.readPassword().
             for (int i = 0; i < 50; i++)
@@ -35,10 +38,10 @@ public class Client {
         else {
             console.printf("Enter username: ");
             console.flush();
-            String user = console.readLine();
+            user = console.readLine();
             console.printf("Enter password: ");
             console.flush();
-            String pass = console.readPassword().toString();
+            pass = console.readPassword().toString();
         }
 
         try {
