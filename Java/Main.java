@@ -7,6 +7,7 @@ import sql.Searches;
 import sql.Updates;
 import cli.AutoTransactionState;
 import cli.ChoiceState;
+import cli.GetChoiceState;
 import cli.LicenseRegistrationState;
 import cli.NewVehicleState;
 import cli.SearchState;
@@ -28,6 +29,11 @@ public class Main {
             client.InitializeDatabase();
             client.PopulateDatabase();
         }
+        
+        GetChoiceState gcs = new GetChoiceState("TEST");
+        gcs.addChoice(1, "A");
+        gcs.addChoice(2, "B");
+        System.out.println(gcs.run(client));
         
         ChoiceState cs = new ChoiceState("Main Menu", true);
         State s1 = new NewVehicleState();

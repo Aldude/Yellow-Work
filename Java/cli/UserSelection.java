@@ -54,5 +54,19 @@ public class UserSelection
 		return -2;
 	}
 	
+	public static void printResults(ResultSet result, int[] columns)
+	{
+		try {
+			result.first();
+			while(result.next()) {
+				for(int col : columns)
+					System.out.print(result.getString(col) + " ");
+				System.out.println("");
+			}
+		} catch (SQLException e) {
+			System.out.println("printResults :: Failed");
+			System.out.println(e.getMessage());
+		}
+	}
 	
 }

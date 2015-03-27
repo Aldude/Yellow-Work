@@ -10,7 +10,7 @@ public class Searches {
     
     public ResultSet DriversBySimilarName(Client client, String name) {
         ResultSet rv = null;
-        String query = "SELECT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
+        String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
                 "r.licence_no = l.licence_no AND " +
@@ -30,7 +30,7 @@ public class Searches {
 
     public ResultSet DriversByName(Client client, String name) {
         ResultSet rv = null;
-        String query = "SELECT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
+        String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
                 "r.licence_no = l.licence_no AND " +
@@ -50,7 +50,7 @@ public class Searches {
 
     public ResultSet DriversByLicenceNo(Client client, String licenceNo) {
         ResultSet rv = null;
-        String query = "SELECT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
+        String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
                 "r.licence_no = l.licence_no AND " +
