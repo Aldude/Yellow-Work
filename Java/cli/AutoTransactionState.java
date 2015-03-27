@@ -2,6 +2,7 @@ package cli;
 
 import java.io.PrintStream;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 
 import sql.Client;
@@ -16,19 +17,16 @@ public class AutoTransactionState extends State {
 
 	@Override
 	public void run(Client client) {
-		Scanner in = new Scanner(System.in);
-		PrintStream out = System.out;
+		DataCollector dc = new DataCollector("Enter Transaction Information");
 		
-		out.println("Enter Transaction Information");
-		out.print("Vehicle Serial No: ");
-		String vehicleSerialNo = in.nextLine();
+		String vehicleSerialNo = dc.getString("Vehicle Serial No");
+		int price = dc.getInt("Price");
+		Date today = dc.getDate("Transaction Date");
+		
 		GetDriverState gds = new GetDriverState(false, "Buyer SIN");
 		String buyerSin = gds.run(client);
 		gds.setDescription("Seller SIN");
 		String sellerSin = gds.run(client);
-		java.util.Date today = Calendar.getInstance().getTime();
-		out.print("Price: ");
-		int price = in.nextInt();
 		
 		Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price);
 	}

@@ -9,15 +9,16 @@ import sql.Client;
 public class GetChoiceState extends ReturningState<Integer>
 {
 	private HashMap<Integer, String> choices = new HashMap<Integer,String>();
+	private int nextCode = 1;
 
 	public GetChoiceState(String d)
 	{
 		super(d);
 	}
 	
-	public void addChoice(Integer number, String description)
+	public void addChoice(String description)
 	{
-		choices.put(number, description);
+		choices.put(nextCode++, description);
 	}
 
 	@Override

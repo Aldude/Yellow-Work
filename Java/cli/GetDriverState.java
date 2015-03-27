@@ -1,5 +1,6 @@
 package cli;
 
+import java.io.PrintStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -23,17 +24,18 @@ public class GetDriverState extends ReturningState<String>
 	public String run(Client client)
 	{
 		Scanner in = new Scanner(System.in);
+		PrintStream out = System.out;
 		int choice;
 		
-		if(addingAllowed) {
-			GetChoiceState gcs = new GetChoiceState("Find a Driver");
-			gcs.addChoice(1, "Search for an existing driver");
-			gcs.addChoice(2, "Register a new driver");
+		out.println(getDescription());
+		GetChoiceState gcs = new GetChoiceState("Find a Driver");
+		gcs.addChoice("Search for an existing driver");
+		gcs.addChoice("Manually enter SIN");
+			
+		if(addingAllowed)
+			gcs.addChoice("Register a new driver");
 			
 			choice = gcs.run(client);
-		} else {
-			choice = 1;
-		}
 		switch(choice) {
 			case -1:
 				return null;
@@ -60,6 +62,10 @@ public class GetDriverState extends ReturningState<String>
 				}
 				break;
 			case 2:
+				DataCollector dc = new DataCollector("Enter SIN");
+				return dc.getString("");
+				
+			case 3:
 				AddDriverState a = new AddDriverState();
 				return a.run(client);
 		}

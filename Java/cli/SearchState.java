@@ -21,9 +21,9 @@ public class SearchState extends State {
         State s1 = new DriverNameSearchState();
         State s2 = new DriverLicenceNoSearchState();
         State s3 = new TicketLicenceNoSearchState();
-        cs.setChoice(1, s1);
-        cs.setChoice(2, s2);
-        cs.setChoice(3, s3);
+        cs.addChoice(s1);
+        cs.addChoice(s2);
+        cs.addChoice(s3);
 
         cs.run(client);
 	}

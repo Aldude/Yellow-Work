@@ -74,19 +74,6 @@ public class Client {
 		}
     }
     
-    public Blob CreateBlob() {
-    	Blob b = null;
-    	try
-		{
-			b = dbConn.createBlob();
-		} catch (SQLException e)
-		{
-			System.out.println("CreateBlob :: Failed!");
-			System.out.println(e.getMessage());
-		}
-    	return b;
-    }
-
     public void InitializeDatabase() {
         String update = null;
         SqlFileScanner sqlFile;

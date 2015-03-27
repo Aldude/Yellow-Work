@@ -17,8 +17,10 @@ import java.util.Scanner;
  * ...
  * 
  */
-public class UserSelection
+public final class UserSelection
 {
+	
+	private UserSelection() {}
 	
 	public static int getChoice(ResultSet result, String prompt, int[] columns)
 	{

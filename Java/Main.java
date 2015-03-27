@@ -20,6 +20,8 @@ public class Main {
         if(CONNECT && client.ConnectToDatabase() == 0) {
             client.InitializeDatabase();
             client.PopulateDatabase();
+        } else {
+        	return;
         }
         
         ChoiceState cs = new ChoiceState("Main Menu", true);
@@ -28,11 +30,11 @@ public class Main {
         State s3 = new LicenceRegistrationState();
         State s4 = new ViolationRecordState();
         State s5 = new SearchState();
-        cs.setChoice(1, s1);
-        cs.setChoice(2, s2);
-        cs.setChoice(3, s3);
-        cs.setChoice(4, s4);
-        cs.setChoice(5, s5);
+        cs.addChoice(s1);
+        cs.addChoice(s2);
+        cs.addChoice(s3);
+        cs.addChoice(s4);
+        cs.addChoice(s5);
         
         cs.run(client);
         

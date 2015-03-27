@@ -30,7 +30,7 @@ public final class Searches {
     public static ResultSet DriversBySimilarName(Client client, String name) {
         String query = "SELECT name, sin " +
         		"FROM people " +
-        		"WHERE name LIKE '%' || LOWER('" + name + "') || '%'";
+        		"WHERE LOWER(name) LIKE '%' || LOWER('" + name + "') || '%'";
         
         return doQuery(client, query);
     }

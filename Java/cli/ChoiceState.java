@@ -11,6 +11,7 @@ public class ChoiceState extends State
 {
 	private Map<Integer, State> choices;
 	private boolean loop;
+	private int nextCode = 1;
 	
 	public ChoiceState(String d, boolean l)
 	{
@@ -46,9 +47,9 @@ public class ChoiceState extends State
 		
 	}
 	
-	public void setChoice(int n, State c)
+	public void addChoice(State c)
 	{
-		choices.put(n, c);
+		choices.put(nextCode++, c);
 	}
 
 }
