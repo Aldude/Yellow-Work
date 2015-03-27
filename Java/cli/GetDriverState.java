@@ -30,8 +30,7 @@ public class GetDriverState extends ReturningState<String>
 		int search, manual;
 		int registerNew = -2;
 		
-		out.println(getDescription());
-		GetChoiceState gcs = new GetChoiceState("Find a Driver");
+		GetChoiceState gcs = new GetChoiceState(description);
 		search = gcs.addChoice("Search for an existing driver");
 		manual = gcs.addChoice("Manually enter SIN");
 			
@@ -62,8 +61,39 @@ public class GetDriverState extends ReturningState<String>
 				System.out.println(e.getMessage());
 			}
 		} else if (choice == manual) {
-			DataCollector dc = new DataCollector("Enter SIN");
-			return dc.getString("");
+			DataCollector dc = new DataCollector();
+			String sin = dc.getString("Enter SIN (leave empty to exit)");
+			if(sin.equals("")) {
+				System.out.println("Returning to: " + description);
+				run(client);
+			}
+			ResultSet r = Searches.PersonWithSin(client, sin);
+			try
+			{
+				while(!r.isBeforeFirst()) {
+					System.out.println("No matches!");
+					boolean create = dc.getBool("Create this person?");
+					if(create) {
+						AddDriverState a = new AddDriverState(sin);
+						return a.run(client);
+					} else {
+						sin = dc.getString("Enter SIN (leave empty to exit)");
+						if(sin.equals("")) {
+							System.out.println("Returning to: " + description);
+							run(client);
+						}
+						r = Searches.PersonWithSin(client, sin);
+					}
+				}
+				return sin;
+				
+			} catch (SQLException e)
+			{
+				System.out.println("Exception during query");
+				System.out.println(e.getMessage());
+				run(client);
+			}
+			
 		} else if (choice == registerNew) {
 			AddDriverState a = new AddDriverState();
 			return a.run(client);
