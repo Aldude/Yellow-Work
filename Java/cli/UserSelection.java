@@ -1,6 +1,7 @@
 package cli;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -41,7 +42,12 @@ public final class UserSelection
 			} while(result.next());
 			
 			do {
-				choice = in.nextInt();
+				try {
+					choice = in.nextInt();
+				} catch (InputMismatchException e) {
+					in.next();
+					choice = -2;
+				}
 			} while(choice > row || choice == 0 || choice < -1);
 			
 			result.first();

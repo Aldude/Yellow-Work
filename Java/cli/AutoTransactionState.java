@@ -23,7 +23,7 @@ public class AutoTransactionState extends State {
 		int price = dc.getInt("Price");
 		Date today = dc.getDate("Transaction Date");
 		
-		GetDriverState gds = new GetDriverState(false, "Buyer SIN");
+		GetDriverState gds = new GetDriverState(true, "Buyer SIN");
 		String buyerSin = gds.run(client);
 		gds.setDescription("Seller SIN");
 		String sellerSin = gds.run(client);

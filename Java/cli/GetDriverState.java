@@ -27,47 +27,46 @@ public class GetDriverState extends ReturningState<String>
 		PrintStream out = System.out;
 		int choice;
 		
+		int search, manual;
+		int registerNew = -2;
+		
 		out.println(getDescription());
 		GetChoiceState gcs = new GetChoiceState("Find a Driver");
-		gcs.addChoice("Search for an existing driver");
-		gcs.addChoice("Manually enter SIN");
+		search = gcs.addChoice("Search for an existing driver");
+		manual = gcs.addChoice("Manually enter SIN");
 			
 		if(addingAllowed)
-			gcs.addChoice("Register a new driver");
+			registerNew = gcs.addChoice("Register a new driver");
 			
 			choice = gcs.run(client);
-		switch(choice) {
-			case -1:
-				return null;
-			case 1:
-				System.out.print("Name to search for: ");
-				String name = in.next();
-				int[] cols = {1,2};
-				Integer selection;
-				ResultSet drivers = Searches.DriversBySimilarName(client,name);
-				UserSelection.printResults(drivers, cols);
-				selection = UserSelection.getChoice(drivers,
-						"Choose a name",
-						cols);
+		if(choice == -1) {
+			return null;
+		} else if (choice == search) {
+			System.out.print("Name to search for: ");
+			String name = in.next();
+			int[] cols = {1,2};
+			Integer selection;
+			ResultSet drivers = Searches.DriversBySimilarName(client,name);
+			selection = UserSelection.getChoice(drivers,
+					"Choose a name",
+					cols);
+			System.out.println("Selection: " + selection);
+			try
+			{
+				drivers.absolute(selection.intValue());
+				return drivers.getString(2);
+			} catch (SQLException e)
+			{
+				System.out.println("Failed searching for drivers");
 				System.out.println("Selection: " + selection);
-				try
-				{
-					drivers.absolute(selection.intValue());
-					return drivers.getString(2);
-				} catch (SQLException e)
-				{
-					System.out.println("Failed searching for drivers");
-					System.out.println("Selection: " + selection);
-					System.out.println(e.getMessage());
-				}
-				break;
-			case 2:
-				DataCollector dc = new DataCollector("Enter SIN");
-				return dc.getString("");
-				
-			case 3:
-				AddDriverState a = new AddDriverState();
-				return a.run(client);
+				System.out.println(e.getMessage());
+			}
+		} else if (choice == manual) {
+			DataCollector dc = new DataCollector("Enter SIN");
+			return dc.getString("");
+		} else if (choice == registerNew) {
+			AddDriverState a = new AddDriverState();
+			return a.run(client);
 		}
 		return null;
 	}

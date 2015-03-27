@@ -25,18 +25,15 @@ public class DataCollector
 	
 	public int getInt(String prompt) {
 		out.print(prompt + ": ");
-		while(in.hasNext()) {
-			if(in.hasNextInt()) {
-				int r = in.nextInt();
-				return r;
-			} else {
-				out.println("Invalid integer - try again");
-				in.next();
+		while(true) {
+			String input = in.nextLine();
+			try {
+				int result = Integer.parseInt(input);
+				return result;
+			} catch (NumberFormatException e) {
+				out.println("Please enter a valid integer");
 			}
 		}
-		
-		// Should never get here.
-		return -1;
 	}
 	
 	public Date getDate(String prompt) {

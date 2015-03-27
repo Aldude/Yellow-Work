@@ -2,6 +2,7 @@ package cli;
 import sql.Client;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -35,8 +36,12 @@ public class ChoiceState extends State
 				System.out.println(i + ") " + choices.get(i).getDescription());
 			}
 			do {
-                /* TODO: This doesn't work when you input a non-numeric */
-				num = in.nextInt();
+				try {
+					num = in.nextInt();
+				} catch (InputMismatchException e) {
+					in.next();
+					num = -2;
+				}
 			}
 			while(!choices.containsKey(num) && num != -1);
 			if(num == -1)

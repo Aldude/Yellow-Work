@@ -17,20 +17,14 @@ public class NewVehicleState extends State {
 
 	@Override
 	public void run(Client client) {
-		Scanner in = new Scanner(System.in);
 		PrintStream out = System.out;
+		DataCollector dc = new DataCollector("Enter the vehicle's information");
 		
-		out.println("Enter the vehicle's information:");
-		out.print("Serial No: ");
-		String serialNo = in.nextLine();
-		out.print("Maker: ");
-		String maker = in.nextLine();
-		out.print("Model: ");
-		String model = in.nextLine();
-		out.print("Year: ");
-		int year = in.nextInt();
-		out.print("Color: ");
-		String color = in.nextLine();
+		String serialNo = dc.getString("Vehicle Serial No");
+		String maker = dc.getString("Maker");
+		String model = dc.getString("Model");
+		int year = dc.getInt("Year");
+		String color = dc.getString("Color");
 		
 		int[] columns = {2};
 		int type = UserSelection.getChoice(Searches.VehicleTypes(client), "Vehicle Type", columns);

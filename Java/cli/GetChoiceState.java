@@ -1,6 +1,7 @@
 package cli;
 
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import sql.Client;
@@ -16,9 +17,10 @@ public class GetChoiceState extends ReturningState<Integer>
 		super(d);
 	}
 	
-	public void addChoice(String description)
+	public int addChoice(String description)
 	{
-		choices.put(nextCode++, description);
+		choices.put(nextCode, description);
+		return nextCode++;
 	}
 
 	@Override
@@ -34,8 +36,12 @@ public class GetChoiceState extends ReturningState<Integer>
 			System.out.println(i + ") " + choices.get(i));
 		}
 		do {
-            /* TODO: This doesn't work when you input a non-numeric */
-			num = in.nextInt();
+			try {
+				num = in.nextInt();
+			} catch (InputMismatchException e) {
+				in.next();
+				num = -2;
+			}
 		}
 		while(!choices.containsKey(num) && num != -1);
 		return num;

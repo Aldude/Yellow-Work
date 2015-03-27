@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Date;
 
 public final class Updates {
-    private static final boolean VERBOSE = true;
+    private static final boolean VERBOSE = false;
     
 	private static int nextTransactionId = 22;
 	private static int nextTicketNo = 10;

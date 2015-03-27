@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public final class Searches {
     private static Scanner scan = new Scanner(System.in);
-    private static final boolean VERBOSE = true;
+    private static final boolean VERBOSE = false;
     
     private Searches() {}
     
