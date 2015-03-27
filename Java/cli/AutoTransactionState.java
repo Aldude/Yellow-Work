@@ -1,10 +1,6 @@
 package cli;
 
-import java.io.PrintStream;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Scanner;
-
 import sql.Client;
 import sql.Updates;
 
@@ -25,11 +21,11 @@ public class AutoTransactionState extends State {
 		
 		GetDriverState gds = new GetDriverState(true, "Buyer SIN");
 		String buyerSin = gds.run(client);
-		gds.setDescription("Seller SIN");
+		gds = new GetDriverState(false, "Seller SIN");
 		String sellerSin = gds.run(client);
 		
 		if(Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price))
-			System.out.println("Transaction successful!");
+			System.out.println("\n\nTransaction successful!\n");
 	}
 
 }
