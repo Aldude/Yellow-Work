@@ -1,10 +1,12 @@
 package cli;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import sql.Client;
 import sql.Searches;
+import sql.Updates;
 
 public class NewVehicleState extends State {
 
@@ -19,14 +21,16 @@ public class NewVehicleState extends State {
 		PrintStream out = System.out;
 		
 		out.println("Enter the vehicle's information:");
+		out.print("Serial No: ");
+		String serialNo = in.nextLine();
 		out.print("Maker: ");
-		String maker = in.next();
+		String maker = in.nextLine();
 		out.print("Model: ");
-		String model = in.next();
+		String model = in.nextLine();
 		out.print("Year: ");
 		int year = in.nextInt();
 		out.print("Color: ");
-		String color = in.next();
+		String color = in.nextLine();
 		
 		Searches s = new Searches();
 		int[] columns = {2};
@@ -37,6 +41,19 @@ public class NewVehicleState extends State {
 		GetDriverState g = new GetDriverState();
 		String primarySin = g.run(client);
 		System.out.println(primarySin);
+		
+		out.println("Secondary Drivers: ");
+		String tempSecondarySin = null;
+		ArrayList<String> secondarySins = new ArrayList<String>();
+		tempSecondarySin = g.run(client);
+		
+		while(tempSecondarySin != null) {
+			secondarySins.add(tempSecondarySin);
+			tempSecondarySin = g.run(client);
+		}
+		
+		Updates u = new Updates();
+		u.RegisterVehicle(client, serialNo, maker, model, year, color, type, primarySin, secondarySins);
 		
 	}
 

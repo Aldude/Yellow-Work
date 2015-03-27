@@ -9,6 +9,23 @@ public class Searches {
     private Scanner scan = new Scanner(System.in);
     
     public ResultSet DriversBySimilarName(Client client, String name) {
+    	ResultSet rv = null;
+        String query = "SELECT name, sin " +
+        		"FROM people " +
+        		"WHERE name LIKE '%' || LOWER('" + name + "') || '%'";
+        
+        try {
+            rv = client.statement.executeQuery(query);
+        } catch(SQLException e) {
+            System.out.println("Search failed.");
+            System.out.println(query);
+            System.out.println(e.getMessage());
+        }
+
+        return rv;
+    }
+    
+    public ResultSet DriversWithLicenseBySimilarName(Client client, String name) {
         ResultSet rv = null;
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
@@ -28,7 +45,7 @@ public class Searches {
         return rv;
     }
 
-    public ResultSet DriversByName(Client client, String name) {
+    public ResultSet DriversWithLicenseByName(Client client, String name) {
         ResultSet rv = null;
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +

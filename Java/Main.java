@@ -5,6 +5,7 @@ import java.util.Scanner;
 import sql.Client;
 import sql.Searches;
 import sql.Updates;
+import cli.AddDriverState;
 import cli.AutoTransactionState;
 import cli.ChoiceState;
 import cli.GetChoiceState;
@@ -29,11 +30,6 @@ public class Main {
             client.InitializeDatabase();
             client.PopulateDatabase();
         }
-        
-        GetChoiceState gcs = new GetChoiceState("TEST");
-        gcs.addChoice(1, "A");
-        gcs.addChoice(2, "B");
-        System.out.println(gcs.run(client));
         
         ChoiceState cs = new ChoiceState("Main Menu", true);
         State s1 = new NewVehicleState();
@@ -72,7 +68,7 @@ public class Main {
         Searches s = new Searches();
         Updates u = new Updates();
         
-        ResultSet r = s.DriversBySimilarName(client, "ish");
+        ResultSet r = s.DriversWithLicenseBySimilarName(client, "ish");
         
         
         System.out.println("DriversBySimilarName:");
@@ -88,7 +84,7 @@ public class Main {
 			System.out.println(e.getMessage());
 		}
         
-        r = s.DriversBySimilarName(client, "ish");
+        r = s.DriversWithLicenseBySimilarName(client, "ish");
         
         int[] cols = {1,4};
         int selection = UserSelection.getChoice(r, "Select a driver", cols);

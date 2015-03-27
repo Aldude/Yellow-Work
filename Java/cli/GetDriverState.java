@@ -27,6 +27,8 @@ public class GetDriverState extends ReturningState<String>
 		gcs.addChoice(1, "Search for an existing driver");
 		gcs.addChoice(2, "Register a new driver");
 		switch(gcs.run(client)) {
+			case -1:
+				return null;
 			case 1:
 				System.out.print("Name to search for: ");
 				String name = in.next();
@@ -44,13 +46,14 @@ public class GetDriverState extends ReturningState<String>
 					return drivers.getString(2);
 				} catch (SQLException e)
 				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println("Failed searching for drivers");
+					System.out.println("Selection: " + selection);
+					System.out.println(e.getMessage());
 				}
 				break;
 			case 2:
-				
-				break;
+				AddDriverState a = new AddDriverState();
+				return a.run(client);
 		}
 		return null;
 	}

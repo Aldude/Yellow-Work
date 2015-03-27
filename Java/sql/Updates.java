@@ -1,6 +1,7 @@
 package sql;
 import java.sql.*;
 import java.util.List;
+import java.util.Date;
 
 public class Updates {
 	private int nextTransactionId = 22;
@@ -171,7 +172,8 @@ public class Updates {
 	 
 	 static String getSqlDateString(Date d)
 	 {
-		 return "TO_DATE('" + d.toString() + "', 'yyyy-mm-dd')";
+		 java.sql.Date sqlDate = new java.sql.Date(d.getTime());
+		 return "TO_DATE('" + sqlDate.toString() + "', 'yyyy-mm-dd')";
 	 }
 			 
 			 

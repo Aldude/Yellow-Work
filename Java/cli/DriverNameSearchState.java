@@ -16,6 +16,6 @@ public class DriverNameSearchState extends SearchState {
         System.out.println("Driver name to search for:");
         String name = scan.nextLine();
         /* TODO: Do something useful with the result */
-        search.DriversByName(client, name);
+        search.DriversWithLicenseByName(client, name);
     }
 }
