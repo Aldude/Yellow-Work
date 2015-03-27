@@ -7,6 +7,7 @@ import sql.Updates;
 
 public class AddDriverState extends ReturningState<String>
 {
+	private String autofillSin = null;
 
 	public AddDriverState()
 	{
@@ -14,12 +15,22 @@ public class AddDriverState extends ReturningState<String>
 		super("Add a new driver");
 		// TODO Auto-generated constructor stub
 	}
+	
+	public AddDriverState(String sin)
+	{
+		this();
+		autofillSin = sin;
+	}
 
 	@Override
 	public String run(Client client)
 	{
 		DataCollector dc = new DataCollector("Enter the driver's information");
-		String sin = dc.getString("SIN");
+		String sin;
+		if(autofillSin == null)
+			sin = dc.getString("SIN");
+		else
+			sin = autofillSin;
 		String name = dc.getString("Name");
 		double height = dc.getDouble("Height");
 		int weight = dc.getInt("Weight");

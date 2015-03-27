@@ -25,6 +25,18 @@ public class DataCollector
 		return in.nextLine();
 	}
 	
+	public boolean getBool(String prompt) {
+		out.print(prompt + " (y/n): ");
+		while(true) {
+			String input = in.nextLine();
+			char first = input.charAt(0);
+			if(first == 'y' || first == 'Y')
+				return true;
+			else
+				return false;
+		}
+	}
+	
 	public int getInt(String prompt) {
 		out.print(prompt + ": ");
 		while(true) {

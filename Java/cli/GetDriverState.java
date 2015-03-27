@@ -72,12 +72,18 @@ public class GetDriverState extends ReturningState<String>
 			{
 				while(!r.isBeforeFirst()) {
 					System.out.println("No matches!");
-					sin = dc.getString("Enter SIN (leave empty to exit)");
-					if(sin.equals("")) {
-						System.out.println("Returning to: " + description);
-						run(client);
+					boolean create = dc.getBool("Create this person?");
+					if(create) {
+						AddDriverState a = new AddDriverState(sin);
+						return a.run(client);
+					} else {
+						sin = dc.getString("Enter SIN (leave empty to exit)");
+						if(sin.equals("")) {
+							System.out.println("Returning to: " + description);
+							run(client);
+						}
+						r = Searches.PersonWithSin(client, sin);
 					}
-					r = Searches.PersonWithSin(client, sin);
 				}
 				return sin;
 				
