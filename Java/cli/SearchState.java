@@ -17,7 +17,7 @@ public class SearchState extends State {
 	@Override
 	public void run(Client client) {
 		// TODO Auto-generated method stub
-        ChoiceState cs = new ChoiceState("Main Menu", true);
+        ChoiceState cs = new ChoiceState("Search Engine", true);
         State s1 = new DriverNameSearchState();
         State s2 = new DriverLicenceNoSearchState();
         State s3 = new TicketLicenceNoSearchState();
