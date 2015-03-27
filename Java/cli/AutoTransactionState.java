@@ -1,18 +1,20 @@
 package cli;
 
 import java.io.PrintStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
 import sql.Client;
+import sql.Searches;
 import sql.Updates;
 
 public class AutoTransactionState extends State {
 
 	public AutoTransactionState() {
 		super("Auto Transaction");
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -27,8 +29,27 @@ public class AutoTransactionState extends State {
 		String buyerSin = gds.run(client);
 		gds.setDescription("Seller SIN");
 		String sellerSin = gds.run(client);
-		
-		if(Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price))
+
+        ResultSet r = Searches.VehicleWithOwner(client, sellerSin, vehicleSerialNo);
+        Boolean cont = false;
+
+        try {
+            cont = r.isBeforeFirst();
+        } catch (SQLException e) {
+            System.out.println("Error with isBeforeFirst call");
+            System.out.println(e.getSQLState());
+            return;
+        }
+
+        if(!cont) {
+            cont = dc.getBool("Seller does not own this vehicle. Try again?");
+
+            if(!cont) {
+                return;
+            }
+        }
+
+        if(Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price))
 			System.out.println("Transaction successful!");
 	}
 

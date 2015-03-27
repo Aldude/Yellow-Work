@@ -101,6 +101,17 @@ public final class Searches {
 
         return doQuery(client, query);
     }
+
+    public static ResultSet VehicleWithOwner(Client client, String sin, String serial) {
+        String query = "SELECT p.sin" +
+                "FROM owner o, people p, vehicle v" +
+                "WHERE o.vehicle_id = v.serial_no AND " +
+                "o.owner_id = p.sin AND " +
+                "v.serial_no = '" + serial + "' AND " +
+                "p.sin = " + sin;
+
+        return doQuery(client, query);
+    }
     
     public static ResultSet VehicleTypes(Client client) {
     	String query = "SELECT * FROM vehicle_type";
