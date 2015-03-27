@@ -37,7 +37,7 @@ public class AddDriverState extends ReturningState<String>
 		String eyeColor = dc.getString("Eye Color");
 		String hairColor = dc.getString("Hair Color");
 		String address = dc.getString("Address");
-		char gender = dc.getString("Gender").charAt(0);
+		char gender = dc.getGender();
 		Date birthday = dc.getDate("Birthday");
 		
 		

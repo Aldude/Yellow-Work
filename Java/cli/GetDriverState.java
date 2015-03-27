@@ -49,7 +49,6 @@ public class GetDriverState extends ReturningState<String>
 			selection = UserSelection.getChoice(drivers,
 					"Choose a name",
 					cols);
-			System.out.println("Selection: " + selection);
 			try
 			{
 				drivers.absolute(selection.intValue());
@@ -57,7 +56,6 @@ public class GetDriverState extends ReturningState<String>
 			} catch (SQLException e)
 			{
 				System.out.println("Failed searching for drivers");
-				System.out.println("Selection: " + selection);
 				System.out.println(e.getMessage());
 			}
 		} else if (choice == manual) {
@@ -72,7 +70,7 @@ public class GetDriverState extends ReturningState<String>
 			{
 				while(!r.isBeforeFirst()) {
 					System.out.println("No matches!");
-					boolean create = dc.getBool("Create this person?");
+					boolean create = addingAllowed ? dc.getBool("Create this person?") : false;
 					if(create) {
 						AddDriverState a = new AddDriverState(sin);
 						return a.run(client);

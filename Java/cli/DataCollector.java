@@ -25,6 +25,19 @@ public class DataCollector
 		return in.nextLine();
 	}
 	
+	public char getGender() {
+		out.print("Gender (m/f): ");
+		while(true) {
+			String input = in.nextLine();
+			char first = input.charAt(0);
+			if(first == 'm' || first == 'M')
+				return 'm';
+			else if(first == 'f' || first == 'F')
+				return 'f';
+			out.print("Please enter one of 'm' or 'f'");
+		}
+	}
+	
 	public boolean getBool(String prompt) {
 		out.print(prompt + " (y/n): ");
 		while(true) {
@@ -58,7 +71,7 @@ public class DataCollector
 				double result = Double.parseDouble(input);
 				return result;
 			} catch (NumberFormatException e) {
-				out.println("Please enter a valid integer");
+				out.println("Please enter a valid floating-point number");
 			}
 		}
 	}
