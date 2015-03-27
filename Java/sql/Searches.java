@@ -115,4 +115,10 @@ public final class Searches {
     	
     	return doQuery(client, query);
     }
+    
+    public static ResultSet VehicleBySerialNo(Client client, String serial_no) {
+    	String query = "SELECT * FROM vehicle WHERE serial_no = '" + serial_no + "'";
+    	
+    	return doQuery(client, query);
+    }
 }
