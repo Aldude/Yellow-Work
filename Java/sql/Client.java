@@ -12,6 +12,7 @@ import java.util.Scanner;
  */
 public class Client {
     private Scanner scan = new Scanner(System.in);
+    private Console console = System.console();
 
     //private String exampleDbUrl = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
     private String dbURL = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
@@ -21,20 +22,24 @@ public class Client {
     public PreparedStatement preparedStatement;
 
     public int ConnectToDatabase() {
-    	/*
-    	 * If we run this in the console, this should be modified to use Console.readLine() and Console.readPassword().
-    	 * However, these don't work while running in IDEs, since System.console() returns null.
-    	 */
-    	
-        System.out.println("Enter username:");
-    	String user = scan.nextLine();
-    	System.out.println("Enter password:");
-        String pass = scan.nextLine();
-        
-        // Bunch of newlines to hide password after entering. Won't need if we use Console.readPassword().
-        for(int i = 0; i < 50; i++)
-        	System.out.println("");
-        
+    	if(console == null) {
+            System.out.println("Enter username:");
+            String user = scan.nextLine();
+            System.out.println("Enter password:");
+            String pass = scan.nextLine();
+
+            // Bunch of newlines to hide password after entering. Won't need if we use Console.readPassword().
+            for (int i = 0; i < 50; i++)
+                System.out.println("");
+        }
+        else {
+            console.printf("Enter username: ");
+            console.flush();
+            String user = console.readLine();
+            console.printf("Enter password: ");
+            console.flush();
+            String pass = console.readPassword().toString();
+        }
 
         try {
             dbConn = DriverManager.getConnection(dbURL, user, pass);
