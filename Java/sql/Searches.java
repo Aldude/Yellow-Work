@@ -109,4 +109,10 @@ public final class Searches {
     	
     	return doQuery(client, query);
     }
+    
+    public static ResultSet PersonWithSin(Client client, String sin) {
+    	String query = "SELECT * FROM people WHERE sin = '" + sin + "'";
+    	
+    	return doQuery(client, query);
+    }
 }

@@ -14,6 +14,8 @@ public class DataCollector
 	private Scanner in = new Scanner(System.in);
 	private PrintStream out = System.out;
 	
+	public DataCollector() {}
+	
 	public DataCollector(String prompt) {
 		out.println(prompt);
 	}
@@ -29,6 +31,19 @@ public class DataCollector
 			String input = in.nextLine();
 			try {
 				int result = Integer.parseInt(input);
+				return result;
+			} catch (NumberFormatException e) {
+				out.println("Please enter a valid integer");
+			}
+		}
+	}
+	
+	public double getDouble(String prompt) {
+		out.print(prompt + ": ");
+		while(true) {
+			String input = in.nextLine();
+			try {
+				double result = Double.parseDouble(input);
 				return result;
 			} catch (NumberFormatException e) {
 				out.println("Please enter a valid integer");

@@ -30,12 +30,11 @@ public class NewVehicleState extends State {
 		int type = UserSelection.getChoice(Searches.VehicleTypes(client), "Vehicle Type", columns);
 		
 		/* Would be nice to make this use a ChoiceState or something similar */
-		out.println("Primary Driver: ");
-		GetDriverState g = new GetDriverState(true, "Get Driver SIN");
+		GetDriverState g = new GetDriverState(true, "Primary Driver");
 		String primarySin = g.run(client);
 		System.out.println(primarySin);
 		
-		out.println("Secondary Drivers: ");
+		g.setDescription("Secondary Drivers");
 		String tempSecondarySin = null;
 		ArrayList<String> secondarySins = new ArrayList<String>();
 		tempSecondarySin = g.run(client);

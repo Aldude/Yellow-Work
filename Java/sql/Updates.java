@@ -27,7 +27,7 @@ public final class Updates {
 		return true;
 	}
 	 
-	public static void AddPerson(Client client,
+	public static boolean AddPerson(Client client,
 			String sin,
 			String name,
 			double height,
@@ -42,10 +42,10 @@ public final class Updates {
 				"VALUES( '" + sin + "', '" + name + "', " + height + ", " + weight + ", '" + eyecolor + "', '" + haircolor +
 				"', '" + addr + "', '" + gender + "', " + getSqlDateString(birthday) + ")";
 		
-		doUpdate(client, update);
+		return doUpdate(client, update);
 	}
 	 
-	public static void RegisterVehicle(Client client,
+	public static boolean RegisterVehicle(Client client,
 			String serialNo,
 			String maker,
 			String model,
@@ -58,23 +58,24 @@ public final class Updates {
 		String update = "INSERT into vehicle " +
 				"VALUES( '" + serialNo + "', '" + maker + "', '" + model + "', " + year + ", '" + color + "', " + typeId + ")";
 		if(!doUpdate(client, update))
-			return;
+			return false;
 		
 		update = "INSERT into owner " +
 				"VALUES( '" + primaryOwnerSin + "', '" + serialNo + "', 'y')";
 		if(!doUpdate(client, update))
-			return;
+			return false;
 		 
 		for(String secondaryOwnerSin : secondaryOwnerSins)
 		{
 			update = "INSERT into owner " +
 					"VALUES( '" + secondaryOwnerSin + "', '" + serialNo + "', 'n')";
 			if(!doUpdate(client, update))
-				return;
+				return false;
 		}
+		return true;
 	}
 	 
-	public static void DoTransaction(Client client,
+	public static boolean DoTransaction(Client client,
 			String sellerSin,
 			String buyerSin,
 			String vehicleSerialNo,
@@ -85,22 +86,21 @@ public final class Updates {
 				"FROM owner " +
 				"WHERE vehicle_id = '" + vehicleSerialNo + "'";
 		if(!doUpdate(client, update))
-			return;
+			return false;
 		
 		update = "INSERT into owner " +
 				"VALUES( '" + buyerSin + "', '" + vehicleSerialNo + "', 'y')";
 		if(!doUpdate(client, update))
-			return;
+			return false;
 		
 		update = "INSERT into auto_sale " +
 				"VALUES( " + nextTransactionId++ + ", '" + sellerSin + "', '" + buyerSin + "', '" + vehicleSerialNo +
 				"', " + getSqlDateString(saleDate) + ", " + price + ")";
-		if(!doUpdate(client, update))
-			return;
+		return doUpdate(client, update);
 		 
 	 }
 	
-	public static void RegisterLicence(Client client,
+	public static boolean RegisterLicence(Client client,
 			String licenceNo,
 			String driverSin,
 			String licenceClass,
@@ -122,11 +122,12 @@ public final class Updates {
 			System.out.println(e.getMessage());
 			if(!VERBOSE)
 				System.out.println(update);
-			return;
+			return false;
 		}
+		return true;
 	}
 	
-	public static void RegisterViolation(Client client,
+	public static boolean RegisterViolation(Client client,
 			String violatorSin,
 			String officerSin,
 			String vehicleSerialNo,
@@ -138,7 +139,7 @@ public final class Updates {
 		String update = "INSERT into ticket " +
 				"VALUES( " + nextTicketNo++ + ", '" + violatorSin + "', '" + vehicleSerialNo + "', '" + officerSin +
 				"', '" + type + "', " + getSqlDateString(date) + ", '" + location + "', '" + description + "')";
-		doUpdate(client, update);
+		return doUpdate(client, update);
 	}
 			
 	 
