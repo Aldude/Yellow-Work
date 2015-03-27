@@ -5,11 +5,13 @@ import java.util.Scanner;
 /**
  * Created by Blake on 2015-03-09.
  */
-public class Searches {
-    private Scanner scan = new Scanner(System.in);
+public final class Searches {
+    private static Scanner scan = new Scanner(System.in);
     private static final boolean VERBOSE = true;
     
-    public ResultSet doQuery(Client client, String query) {
+    private Searches() {}
+    
+    public static ResultSet doQuery(Client client, String query) {
     	ResultSet rv = null;
     	try {
             rv = client.statement.executeQuery(query);
@@ -25,7 +27,7 @@ public class Searches {
         return rv;
     }
     
-    public ResultSet DriversBySimilarName(Client client, String name) {
+    public static ResultSet DriversBySimilarName(Client client, String name) {
         String query = "SELECT name, sin " +
         		"FROM people " +
         		"WHERE name LIKE '%' || LOWER('" + name + "') || '%'";
@@ -33,7 +35,7 @@ public class Searches {
         return doQuery(client, query);
     }
     
-    public ResultSet DriversWithLicenceBySimilarName(Client client, String name) {
+    public static ResultSet DriversWithLicenceBySimilarName(Client client, String name) {
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
@@ -44,7 +46,7 @@ public class Searches {
         return doQuery(client, query);
     }
 
-    public ResultSet DriversWithLicenceByName(Client client, String name) {
+    public static ResultSet DriversWithLicenceByName(Client client, String name) {
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
@@ -55,7 +57,7 @@ public class Searches {
         return doQuery(client, query);
     }
 
-    public ResultSet DriversByLicenceNo(Client client, String licenceNo) {
+    public static ResultSet DriversByLicenceNo(Client client, String licenceNo) {
         String query = "SELECT p.name, p.sin, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date " +
                 "FROM people p, drive_licence l, restriction r, driving_condition c " +
                 "WHERE p.sin = l.sin AND " +
@@ -66,7 +68,7 @@ public class Searches {
         return doQuery(client, query);
     }
 
-    public ResultSet TicketsBySIN(Client client, String sin) {
+    public static ResultSet TicketsBySIN(Client client, String sin) {
         String query = "SELECT ticket_no " +
                 "FROM ticket " +
                 "WHERE violator_no = '" + sin + "'";
@@ -74,7 +76,7 @@ public class Searches {
         return doQuery(client, query);
     }
 
-    public ResultSet TicketsByLicenceNo(Client client, String licenceNo) {
+    public static ResultSet TicketsByLicenceNo(Client client, String licenceNo) {
         String query = "SELECT t.ticket_no, t.vtype, p.name, p.sin, tt.fine " +
                 "FROM ticket t, people p, drive_licence l, ticket_type tt " +
                 "WHERE t.violator_no = p.sin AND " +
@@ -85,7 +87,7 @@ public class Searches {
         return doQuery(client, query);
     }
 
-    public ResultSet VehicleHistory(Client client, String serialNo) {
+    public static ResultSet VehicleHistory(Client client, String serialNo) {
         String query = "SELECT v.serial_no, COUNT(s.transaction_id) AS \"Sales\", AVG(s.price) AS \"Price\", COUNT(t.ticket_no) AS \"Violations\" " +
                 "FROM auto_sale s, vehicle v, ticket t " +
                 "WHERE s.vehicle_id = v.serial_no AND " +
@@ -96,13 +98,13 @@ public class Searches {
         return doQuery(client, query);
     }
     
-    public ResultSet VehicleTypes(Client client) {
+    public static ResultSet VehicleTypes(Client client) {
     	String query = "SELECT * FROM vehicle_type";
     	
         return doQuery(client, query);
     }
     
-    public ResultSet TicketTypes(Client client) {
+    public static ResultSet TicketTypes(Client client) {
     	String query = "SELECT * FROM ticket_type";
     	
     	return doQuery(client, query);

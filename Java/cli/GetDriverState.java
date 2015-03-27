@@ -23,7 +23,6 @@ public class GetDriverState extends ReturningState<String>
 	public String run(Client client)
 	{
 		Scanner in = new Scanner(System.in);
-		Searches s = new Searches();
 		int choice;
 		
 		if(addingAllowed) {
@@ -43,7 +42,7 @@ public class GetDriverState extends ReturningState<String>
 				String name = in.next();
 				int[] cols = {1,2};
 				Integer selection;
-				ResultSet drivers = s.DriversBySimilarName(client,name);
+				ResultSet drivers = Searches.DriversBySimilarName(client,name);
 				UserSelection.printResults(drivers, cols);
 				selection = UserSelection.getChoice(drivers,
 						"Choose a name",

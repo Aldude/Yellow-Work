@@ -30,8 +30,7 @@ public class AutoTransactionState extends State {
 		out.print("Price: ");
 		int price = in.nextInt();
 		
-		Updates u = new Updates();
-		u.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price);
+		Updates.DoTransaction(client, sellerSin, buyerSin, vehicleSerialNo, today, price);
 	}
 
 }

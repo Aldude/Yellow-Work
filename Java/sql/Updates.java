@@ -4,13 +4,15 @@ import java.sql.*;
 import java.util.List;
 import java.util.Date;
 
-public class Updates {
+public final class Updates {
     private static final boolean VERBOSE = true;
     
-	private int nextTransactionId = 22;
-	private int nextTicketNo = 10;
+	private static int nextTransactionId = 22;
+	private static int nextTicketNo = 10;
 	
-	public boolean doUpdate(Client client, String update) {
+	private Updates() {}
+	
+	public static boolean doUpdate(Client client, String update) {
 		try {
 			client.statement.executeUpdate(update);
 		} catch(SQLException e) {
@@ -25,7 +27,7 @@ public class Updates {
 		return true;
 	}
 	 
-	public void AddPerson(Client client,
+	public static void AddPerson(Client client,
 			String sin,
 			String name,
 			double height,
@@ -43,7 +45,7 @@ public class Updates {
 		doUpdate(client, update);
 	}
 	 
-	public void RegisterVehicle(Client client,
+	public static void RegisterVehicle(Client client,
 			String serialNo,
 			String maker,
 			String model,
@@ -72,7 +74,7 @@ public class Updates {
 		}
 	}
 	 
-	public void DoTransaction(Client client,
+	public static void DoTransaction(Client client,
 			String sellerSin,
 			String buyerSin,
 			String vehicleSerialNo,
@@ -98,7 +100,7 @@ public class Updates {
 		 
 	 }
 	
-	public void RegisterLicence(Client client,
+	public static void RegisterLicence(Client client,
 			String licenceNo,
 			String driverSin,
 			String licenceClass,
@@ -124,7 +126,7 @@ public class Updates {
 		}
 	}
 	
-	public void RegisterViolation(Client client,
+	public static void RegisterViolation(Client client,
 			String violatorSin,
 			String officerSin,
 			String vehicleSerialNo,
@@ -140,11 +142,11 @@ public class Updates {
 	}
 			
 	 
-	 static String getSqlDateString(Date d)
-	 {
-		 java.sql.Date sqlDate = new java.sql.Date(d.getTime());
-		 return "TO_DATE('" + sqlDate.toString() + "', 'yyyy-mm-dd')";
-	 }
+	public static String getSqlDateString(Date d)
+	{
+		java.sql.Date sqlDate = new java.sql.Date(d.getTime());
+	 	return "TO_DATE('" + sqlDate.toString() + "', 'yyyy-mm-dd')";
+	}
 			 
 			 
 	 

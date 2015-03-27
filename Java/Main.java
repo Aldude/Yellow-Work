@@ -75,10 +75,7 @@ public class Main {
         cs.setChoice(6, autoRegistration);
         cs.run(client);
         
-        Searches s = new Searches();
-        Updates u = new Updates();
-        
-        ResultSet r = s.DriversWithLicenceBySimilarName(client, "ish");
+        ResultSet r = Searches.DriversWithLicenceBySimilarName(client, "ish");
         
         
         System.out.println("DriversBySimilarName:");
@@ -94,7 +91,7 @@ public class Main {
 			System.out.println(e.getMessage());
 		}
         
-        r = s.DriversWithLicenceBySimilarName(client, "ish");
+        r = Searches.DriversWithLicenceBySimilarName(client, "ish");
         
         int[] cols = {1,4};
         int selection = UserSelection.getChoice(r, "Select a driver", cols);

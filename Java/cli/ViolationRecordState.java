@@ -34,8 +34,7 @@ public class ViolationRecordState extends State {
 		out.print("Vehicle SIN: ");
 		String vehicleId = in.nextLine();
 		
-		Searches s = new Searches();
-		ResultSet r = s.TicketTypes(client);
+		ResultSet r = Searches.TicketTypes(client);
 		int[] cols = {1,2};
 		int choice = UserSelection.getChoice(r, "Ticket Type", cols);
 		String ticketType = null;
@@ -66,8 +65,7 @@ public class ViolationRecordState extends State {
 		out.print("Description: ");
 		String description = in.nextLine();
 		
-		Updates u = new Updates();
-		u.RegisterViolation(client, violatorSin, officerSin, vehicleId, ticketType, date, location, description);
+		Updates.RegisterViolation(client, violatorSin, officerSin, vehicleId, ticketType, date, location, description);
 	}
 
 }

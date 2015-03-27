@@ -59,8 +59,7 @@ public class AddDriverState extends ReturningState<String>
 			System.out.println(e.getMessage());
 		}
 		
-		Updates u = new Updates();
-		u.AddPerson(client, sin, name, height, weight, eyeColor, hairColor, address, gender.charAt(0), birthday);
+		Updates.AddPerson(client, sin, name, height, weight, eyeColor, hairColor, address, gender.charAt(0), birthday);
 		
 		return sin;
 	}

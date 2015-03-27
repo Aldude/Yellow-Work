@@ -1,12 +1,10 @@
 package cli;
 
 import sql.Client;
-import sql.Searches;
 
 import java.util.Scanner;
 
 public class SearchState extends State {
-    protected Searches search = new Searches();
     protected Scanner scan = new Scanner(System.in);
 
 	public SearchState() {

@@ -48,8 +48,7 @@ public class LicenceRegistrationState extends State {
 		java.util.Date expDate = (Date) today.clone();
 		expDate.setYear(today.getYear() + 4);
 		
-		Updates u = new Updates();
-		u.RegisterLicence(client, licenceNo, driverSin, licenceClass, image, today, expDate);
+		Updates.RegisterLicence(client, licenceNo, driverSin, licenceClass, image, today, expDate);
 	}
 
 	

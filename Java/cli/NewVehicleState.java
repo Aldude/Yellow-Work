@@ -32,9 +32,8 @@ public class NewVehicleState extends State {
 		out.print("Color: ");
 		String color = in.nextLine();
 		
-		Searches s = new Searches();
 		int[] columns = {2};
-		int type = UserSelection.getChoice(s.VehicleTypes(client), "Vehicle Type", columns);
+		int type = UserSelection.getChoice(Searches.VehicleTypes(client), "Vehicle Type", columns);
 		
 		/* Would be nice to make this use a ChoiceState or something similar */
 		out.println("Primary Driver: ");
@@ -52,8 +51,7 @@ public class NewVehicleState extends State {
 			tempSecondarySin = g.run(client);
 		}
 		
-		Updates u = new Updates();
-		u.RegisterVehicle(client, serialNo, maker, model, year, color, type, primarySin, secondarySins);
+		Updates.RegisterVehicle(client, serialNo, maker, model, year, color, type, primarySin, secondarySins);
 		
 	}
 
